@@ -446,8 +446,8 @@ export default function Portfolio() {
 
   useEffect(() => { setTimeout(() => setLoaded(true), 200); }, []);
 
-  const heroType = useTyping("I saw the gaps in business systems. Now I build AI to fill them.", 35, 800);
-  const subType = useTyping("Software Engineer → Odoo Consultant → AI Automation Engineer", 25, 2800);
+  const heroType = useTyping("I build AI systems in Python and Rust, and I find the bugs in the ones that already exist.", 35, 800);
+  const subType = useTyping("Software Engineer → Odoo Consultant → AI Engineer", 25, 2800);
 
   const handleCommand = (cmd) => {
     const c = cmd.trim().toLowerCase();
@@ -462,9 +462,9 @@ export default function Portfolio() {
     else if (c === "clear") { setCommandHistory([]); return; }
     else if (c === "sudo" || c.startsWith("sudo")) response = "Nice try. 😏";
     else if (c === "ls") response = "projects/  skills/  journey/  about.md  contact.md  odoo-gaps.log  README.md";
-    else if (c === "whoami") response = "Henos Dereje — Software Engineer → Odoo Consultant → AI Automation Engineer";
+    else if (c === "whoami") response = "Henos Dereje — Software Engineer → Odoo Consultant → AI Engineer";
     else if (c === "pwd") response = "/home/henos/portfolio";
-    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built AI SMS scam prevention (30+ businesses) → AI Automation Engineer";
+    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built AI SMS scam prevention (30+ businesses) → AI Engineer";
     else if (c === "cat readme.md") response = "I implemented Odoo for 30+ companies and saw the same gaps everywhere:\nmanual data entry, slow ticket routing, wasted hours on reports.\nI also built an AI SMS scam prevention system deployed to 30+ businesses.\nNow I build AI pipelines to automate the work nobody should be doing by hand.";
     else if (c === "cat odoo-gaps.log") response = "[GAP] Manual invoice entry — 20 min/invoice\n[GAP] Support tickets unrouted for hours\n[GAP] Meeting notes never became action items\n[GAP] SMS scams costing businesses real money\n[FIX] Built AI pipelines + scam detection for all of these.\n[DEPLOYED] 30+ businesses running the SMS system live.";
     else if (c === "stack") response = "Languages: Python, Go, Java, JavaScript\nAI: LLM Pipelines, Multi-Agent, RAG, Prompt Eng\nERP: Odoo (certified), business process mapping\nInfra: Groq, Llama 3.3, Vercel, Docker, PostgreSQL";
@@ -599,8 +599,7 @@ export default function Portfolio() {
                 fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-1.5px", lineHeight: 1.05,
                 color: "#fff",
               }}>
-                <GlitchText>AI Automation</GlitchText>
-                <br />
+                <GlitchText>AI</GlitchText>{" "}
                 <span style={{ color: "#00FF9D", animation: "glowPulse 3s ease-in-out infinite" }}>Engineer</span>
               </h1>
 
@@ -668,7 +667,7 @@ export default function Portfolio() {
             {/* Origin story block */}
             <div style={{ marginBottom: "60px", padding: "24px", borderRadius: "14px", background: "rgba(0,255,157,0.015)", border: "1px solid rgba(0,255,157,0.06)", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: "12px", right: "16px", fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.30)", letterSpacing: "1px" }}>// ORIGIN</div>
-              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>WHY AI AUTOMATION?</div>
+              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>WHY THIS WORK?</div>
               <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.8, fontFamily: "'Space Grotesk', sans-serif", maxWidth: "700px" }}>
                 I spent years implementing <span style={{ color: "#A78BFA" }}>Odoo ERP</span> for companies — configuring modules, mapping workflows, migrating data. I learned how businesses actually operate: what grows them, what destroys them, and where time gets wasted at scale.
               </div>
@@ -954,7 +953,7 @@ export default function Portfolio() {
                 From ERP to <span style={{ color: "#00FF9D" }}>AI Engineering</span>
               </h2>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", marginTop: "8px", lineHeight: 1.6, fontFamily: "'Space Grotesk', sans-serif" }}>
-                How implementing business systems showed me exactly where AI automation belongs.
+                How implementing business systems taught me where software actually breaks.
               </p>
             </div>
 
@@ -996,11 +995,11 @@ export default function Portfolio() {
                 },
                 {
                   phase: "PHASE 03",
-                  title: "AI Automation Engineer",
+                  title: "AI Engineer",
                   period: "Current",
                   color: "#00FF9D",
-                  content: "Now I combine my software engineering skills with my deep understanding of business operations to build AI systems that actually solve the problems I witnessed. Multi-agent pipelines that classify, extract, route, and automate — designed by someone who's seen the pain these processes cause in real companies. My technical writing and prompt engineering skills let me evaluate and improve AI outputs with precision.",
-                  tags: ["Multi-Agent AI", "LLM Pipelines", "Prompt Engineering", "Production Automation", "RAG Systems"],
+                  content: "Two halves that turned out to be the same job. I build LLM pipelines that classify, extract and route, informed by having watched people do that work by hand. And I work a layer below, on the machine learning frameworks themselves, where I have merged fixes into burn and diffusers and published a crate that checks whether an autodiff engine returns the right gradient at all. Both halves come down to the same instinct: not trusting that something is correct because it ran without complaining.",
+                  tags: ["LLM Pipelines", "Rust", "Autodiff Correctness", "Open Source", "RAG Systems"],
                   isCurrent: true,
                 },
               ].map((item, i) => (
@@ -1145,11 +1144,11 @@ export default function Portfolio() {
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#28CA41" }} />
               </div>
               <TermLine color="#555" prefix="#">cat why-hire-henos.md</TermLine>
-              <TermLine color="#00FF9D" prefix="" delay={200}>→ I've implemented ERP for real companies — I know where the pain is</TermLine>
-              <TermLine color="#00FF9D" prefix="" delay={400}>→ I build AI automation that saves companies thousands of hours and dollars</TermLine>
-              <TermLine color="#00FF9D" prefix="" delay={600}>→ Python, Go, Java + production patterns: retries, SLA tracking, observability</TermLine>
-              <TermLine color="#00FF9D" prefix="" delay={800}>→ Zero infrastructure cost — open-source models, free-tier inference</TermLine>
-              <TermLine color="#00FF9D" prefix="" delay={1000}>→ I speak both engineering and business. I ship systems with measurable ROI.</TermLine>
+              <TermLine color="#00FF9D" prefix="" delay={200}>→ {OSS.merged.length} pull requests merged into projects I do not own. Every one is linkable.</TermLine>
+              <TermLine color="#00FF9D" prefix="" delay={400}>→ I published a crate that checks whether an autodiff engine is actually correct</TermLine>
+              <TermLine color="#00FF9D" prefix="" delay={600}>→ Python, Rust, Go, Java. Production patterns: retries, savepoints, observability</TermLine>
+              <TermLine color="#00FF9D" prefix="" delay={800}>→ I have run a government tax integration where a retry is a compliance problem</TermLine>
+              <TermLine color="#00FF9D" prefix="" delay={1000}>→ I find the bugs that do not crash. Wrong answers are the expensive kind.</TermLine>
               <TermLine color="#555" prefix="#" delay={1200}>_</TermLine>
             </div>
           </div>
