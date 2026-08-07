@@ -154,7 +154,9 @@ const ProjectCard = ({ project, index, onSelect }) => {
         {project.title}
       </h3>
       <p style={{ fontSize: "13px", color: project.status === "locked" ? "#2a2a2a" : "rgba(255,255,255,0.35)", lineHeight: 1.6, margin: "0 0 16px" }}>
-        {project.description}
+        {/* Cards show the short form when there is one. The full description,
+            which may run to several paragraphs, is for the detail modal. */}
+        {project.summary || project.description}
       </p>
 
       {/* Tags */}
@@ -294,10 +296,10 @@ const OSS = {
 const PROJECTS = [
   {
     id: "sms-scam-prevention",
-    title: "AI SMS Scam Prevention System",
-    description: "Built and deployed an AI-powered SMS screening application that detects and prevents scam messages in real-time. The system analyzes incoming SMS content using AI to identify fraudulent patterns, phishing attempts, and social engineering tactics — protecting businesses and their customers from financial loss.",
-    tags: ["AI Classification", "SMS Gateway", "Fraud Detection", "Real-Time Processing", "Production Deployment"],
-    tech: "Python + AI + SMS API",
+    title: "SMS Scam Prevention System",
+    description: "A screening service that reads incoming SMS traffic and blocks scam messages before they reach the person they are aimed at. It classifies fraudulent patterns, phishing attempts and social engineering, and it runs in production for the businesses using it rather than sitting in a notebook.",
+    tags: ["Classification", "SMS Gateway", "Fraud Detection", "Real-Time Processing", "Production Deployment"],
+    tech: "Python + SMS API",
     status: "live",
     accent: "#FF6B6B",
     metrics: [
@@ -307,7 +309,7 @@ const PROJECTS = [
       { value: "Live", label: "IN PRODUCTION" },
     ],
     problem: "SMS scams cause significant financial damage to businesses and individuals, especially in regions with limited fraud prevention infrastructure",
-    solution: "AI-powered screening system deployed across 30+ businesses that detects and blocks scam messages before they reach end users",
+    solution: "A screening layer deployed across 30+ businesses that detects and blocks scam messages before they reach end users",
   },
   {
     id: "odoo-platform-engineering",
@@ -329,7 +331,8 @@ const PROJECTS = [
   {
     id: "tax-einvoice-compliance",
     title: "Government E-Invoicing Compliance Integration",
-    description: "Ethiopia is rolling out mandatory electronic invoicing, and I built the Odoo integration for it. Invoices are assembled into the required XML envelope, signed with an X.509 certificate, and registered against the tax authority's API under a strictly sequential document counter shared across every company in the group. The tricky part is not the happy path: it is withholding tax on a post-discount base, recovering a document number after a failed registration so the sequence never breaks, and making sure a failure after a receipt has already been issued can never roll back the fiscalised record.",
+    summary: "Ethiopia loses tax revenue because most sales are never reported in a form anyone can verify. The national answer is mandatory electronic invoicing, and I built the Odoo side of it: signed XML invoices registered with the tax authority as each sale happens, under a document sequence that is not allowed to break.",
+    description: "Ethiopia loses a large share of the tax it is owed because most sales are never reported in a form anyone can verify. Paper receipts get edited, revenue gets understated, and by the time an auditor arrives there is no trustworthy record left to check. The country's answer is mandatory electronic invoicing, where every sale is registered with the tax authority as it happens, and I built the Odoo side of that.\n\nEach invoice is assembled into the required XML envelope, signed with an X.509 certificate that proves it came from this seller and has not been altered, then registered against the tax authority's API under a strictly sequential document counter shared across every company in the group. Once registered, an invoice is evidence, which changes what the software is allowed to do with it.\n\nThe happy path was the easy part. The real work was withholding tax on a post-discount base, recovering a document number after a failed registration so the national sequence never breaks, and guaranteeing that a failure occurring after a receipt has already been issued can never roll back the fiscalised record. Software that quietly retries is fine in most systems. Here a duplicate or a gap in the sequence is something the seller has to answer for.",
     tags: ["XML Digital Signature", "X.509 Certificates", "Tax Compliance", "API Integration", "Idempotency", "Transaction Safety"],
     tech: "Odoo 19 + Python + XML-DSig",
     status: "live",
@@ -340,8 +343,8 @@ const PROJECTS = [
       { value: "Multi-Co", label: "SHARED COUNTER" },
       { value: "Savepoint", label: "FAILURE ISOLATION" },
     ],
-    problem: "A tax authority integration cannot simply retry on failure. A duplicate or skipped document number is a compliance problem, and a crash after a receipt is issued must not undo the record of it.",
-    solution: "Sequential registration with document-number recovery, certificate-based signing, and savepoint isolation so post-fiscal logic can fail without rolling back an already-registered invoice.",
+    problem: "The government cannot collect the right amount of tax when sales are invisible to it. Paper and offline invoices can be altered or never declared at all, so revenue is understated and audits have no reliable record to work from.",
+    solution: "Every invoice is signed and registered with the tax authority as it is issued, so the declared figure is fixed at the moment of sale. Sequential registration with document-number recovery keeps the national sequence intact, and savepoint isolation means post-fiscal logic can fail without rolling back an invoice the authority has already recorded.",
   },
   {
     id: "odoo-implementation",
@@ -464,8 +467,8 @@ export default function Portfolio() {
     else if (c === "ls") response = "projects/  skills/  journey/  about.md  contact.md  odoo-gaps.log  README.md";
     else if (c === "whoami") response = "Henos Dereje — Software Engineer → Odoo Consultant → AI Engineer";
     else if (c === "pwd") response = "/home/henos/portfolio";
-    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built AI SMS scam prevention (30+ businesses) → AI Engineer";
-    else if (c === "cat readme.md") response = "I implemented Odoo for 30+ companies and saw the same gaps everywhere:\nmanual data entry, slow ticket routing, wasted hours on reports.\nI also built an AI SMS scam prevention system deployed to 30+ businesses.\nNow I build AI pipelines to automate the work nobody should be doing by hand.";
+    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built SMS scam prevention (30+ businesses) → AI Engineer";
+    else if (c === "cat readme.md") response = "I implemented Odoo for 30+ companies and saw the same gaps everywhere:\nmanual data entry, slow ticket routing, wasted hours on reports.\nI also built an SMS scam prevention system deployed to 30+ businesses.\nNow I build AI pipelines to automate the work nobody should be doing by hand.";
     else if (c === "cat odoo-gaps.log") response = "[GAP] Manual invoice entry — 20 min/invoice\n[GAP] Support tickets unrouted for hours\n[GAP] Meeting notes never became action items\n[GAP] SMS scams costing businesses real money\n[FIX] Built AI pipelines + scam detection for all of these.\n[DEPLOYED] 30+ businesses running the SMS system live.";
     else if (c === "stack") response = "Languages: Python, Go, Java, JavaScript\nAI: LLM Pipelines, Multi-Agent, RAG, Prompt Eng\nERP: Odoo (certified), business process mapping\nInfra: Groq, Llama 3.3, Vercel, Docker, PostgreSQL";
     else response = `command not found: ${cmd}. Type 'help' for available commands.`;
@@ -751,7 +754,8 @@ export default function Portfolio() {
                   </div>
 
                   <h3 style={{ fontSize: "22px", fontWeight: 800, margin: "0 0 8px", fontFamily: "'Space Grotesk', sans-serif", color: "#fff" }}>{selectedProject.title}</h3>
-                  <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.6, margin: "0 0 20px" }}>{selectedProject.description}</p>
+                  {/* pre-line so blank lines in a description render as paragraph breaks */}
+                  <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, margin: "0 0 20px", whiteSpace: "pre-line" }}>{selectedProject.description}</p>
 
                   <div style={{ padding: "14px", borderRadius: "10px", background: "rgba(255,77,77,0.04)", border: "1px solid rgba(255,77,77,0.08)", marginBottom: "12px" }}>
                     <div style={{ fontSize: "9px", color: "#FF4D4D", fontWeight: 700, letterSpacing: "1px", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "4px" }}>PROBLEM</div>
@@ -1143,7 +1147,6 @@ export default function Portfolio() {
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#FFBD2E" }} />
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#28CA41" }} />
               </div>
-              <TermLine color="#555" prefix="#">cat why-hire-henos.md</TermLine>
               <TermLine color="#00FF9D" prefix="" delay={200}>→ {OSS.merged.length} pull requests merged into projects I do not own. Every one is linkable.</TermLine>
               <TermLine color="#00FF9D" prefix="" delay={400}>→ I published a crate that checks whether an autodiff engine is actually correct</TermLine>
               <TermLine color="#00FF9D" prefix="" delay={600}>→ Python, Rust, Go, Java. Production patterns: retries, savepoints, observability</TermLine>
