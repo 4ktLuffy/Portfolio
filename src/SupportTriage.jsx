@@ -64,8 +64,8 @@ const SLATimer = ({ priorityKey, startTime }) => {
   return (
     <div style={{ padding: "10px 14px", borderRadius: "10px", background: "rgba(0,0,0,0.15)", border: `1px solid ${barColor}20` }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
-        <span style={{ fontSize: "10px", fontFamily: "mono", fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "1px" }}>SLA TIMER</span>
-        <span style={{ fontSize: "11px", fontFamily: "mono", fontWeight: 700, color: barColor }}>
+        <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "1px" }}>SLA TIMER</span>
+        <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, color: barColor }}>
           {isBreached ? "BREACHED" : `${hrs}h ${mins}m ${secs}s`}
         </span>
       </div>
@@ -73,8 +73,8 @@ const SLATimer = ({ priorityKey, startTime }) => {
         <div style={{ width: `${pct}%`, height: "100%", borderRadius: "2px", background: barColor, transition: "width 1s linear" }} />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>Target: {cfg.sla < 60 ? `${cfg.sla}m` : `${cfg.sla / 60}h`}</span>
-        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>{pct.toFixed(0)}% elapsed</span>
+        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>Target: {cfg.sla < 60 ? `${cfg.sla}m` : `${cfg.sla / 60}h`}</span>
+        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>{pct.toFixed(0)}% elapsed</span>
       </div>
     </div>
   );
@@ -91,12 +91,12 @@ const KBEntry = ({ entry, onRemove, isMatched }) => (
       <div style={{ flex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
           <span style={{
-            fontSize: "9px", padding: "2px 6px", borderRadius: "4px", fontWeight: 700, fontFamily: "mono",
+            fontSize: "9px", padding: "2px 6px", borderRadius: "4px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace",
             background: (CATEGORY_CONFIG[entry.category]?.color || "#9CA3AF") + "15",
             color: CATEGORY_CONFIG[entry.category]?.color || "#9CA3AF",
             textTransform: "uppercase", letterSpacing: "0.5px",
           }}>{entry.category}</span>
-          {isMatched && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(52,211,153,0.12)", color: "#34D399", fontWeight: 700, fontFamily: "mono" }}>MATCHED</span>}
+          {isMatched && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(52,211,153,0.12)", color: "#34D399", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>MATCHED</span>}
         </div>
         <div style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.75)", marginBottom: "4px" }}>{entry.q}</div>
         <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}>{entry.a.slice(0, 120)}...</div>
@@ -112,7 +112,7 @@ const MiniChart = ({ data, label, color }) => {
   const max = Math.max(...data.map(d => d.value), 1);
   return (
     <div style={{ padding: "14px", borderRadius: "10px", background: "rgba(0,0,0,0.15)" }}>
-      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.25)", fontFamily: "mono", marginBottom: "12px" }}>{label}</div>
+      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "12px" }}>{label}</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: "3px", height: "48px" }}>
         {data.map((d, i) => (
           <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
@@ -127,7 +127,7 @@ const MiniChart = ({ data, label, color }) => {
       </div>
       <div style={{ display: "flex", gap: "3px", marginTop: "4px" }}>
         {data.map((d, i) => (
-          <div key={i} style={{ flex: 1, textAlign: "center", fontSize: "8px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>{d.label}</div>
+          <div key={i} style={{ flex: 1, textAlign: "center", fontSize: "8px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>{d.label}</div>
         ))}
       </div>
     </div>
@@ -318,13 +318,13 @@ export default function SupportTriageSystem() {
               </div>
             ) : (
               <div style={{ display: "flex", gap: "6px" }}>
-                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "7px 12px", borderRadius: "8px", background: "rgba(0,0,0,.3)", border: "1px solid rgba(255,255,255,.06)", color: "#fff", fontSize: "12px", fontFamily: "mono", width: "200px" }} />
+                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "7px 12px", borderRadius: "8px", background: "rgba(0,0,0,.3)", border: "1px solid rgba(255,255,255,.06)", color: "#fff", fontSize: "12px", fontFamily: "'IBM Plex Mono', monospace", width: "200px" }} />
                 <button onClick={() => setKeyVisible(!keyVisible)} style={{ padding: "7px", borderRadius: "8px", border: "1px solid rgba(255,255,255,.06)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.3)", cursor: "pointer" }}>{keyVisible ? "🙈" : "👁️"}</button>
-                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "7px 14px", borderRadius: "8px", border: "none", background: apiKey.trim() ? "#A78BFA" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#fff" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "mono" }}>CONNECT</button>
+                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "7px 14px", borderRadius: "8px", border: "none", background: apiKey.trim() ? "#A78BFA" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#fff" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>CONNECT</button>
               </div>
             )}
             {tickets.length > 0 && (
-              <button onClick={handleExportCSV} style={{ padding: "7px 12px", borderRadius: "8px", border: "1px solid rgba(255,255,255,.06)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.4)", fontSize: "11px", fontWeight: 600, cursor: "pointer", fontFamily: "mono" }}>📤 CSV</button>
+              <button onClick={handleExportCSV} style={{ padding: "7px 12px", borderRadius: "8px", border: "1px solid rgba(255,255,255,.06)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.4)", fontSize: "11px", fontWeight: 600, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>📤 CSV</button>
             )}
           </div>
         </div>
@@ -346,7 +346,7 @@ export default function SupportTriageSystem() {
             }}>
               <span>{tab.icon}</span> {tab.label}
               {tab.count !== null && tab.count > 0 && (
-                <span style={{ fontSize: "9px", padding: "1px 5px", borderRadius: "4px", background: activeView === tab.id ? "rgba(167,139,250,0.15)" : "rgba(255,255,255,0.05)", fontFamily: "mono" }}>{tab.count}</span>
+                <span style={{ fontSize: "9px", padding: "1px 5px", borderRadius: "4px", background: activeView === tab.id ? "rgba(167,139,250,0.15)" : "rgba(255,255,255,0.05)", fontFamily: "'IBM Plex Mono', monospace" }}>{tab.count}</span>
               )}
             </button>
           ))}
@@ -394,7 +394,7 @@ export default function SupportTriageSystem() {
                 <div style={{ background: "#0A0A0E", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "12px", overflow: "hidden" }}>
                   <div style={{ padding: "8px 14px", display: "flex", alignItems: "center", gap: "8px", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                     <div style={{ display: "flex", gap: "4px" }}><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#FF5F57" }} /><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#FFBD2E" }} /><div style={{ width: 7, height: 7, borderRadius: "50%", background: "#28CA41" }} /></div>
-                    <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.25)" }}>triage-console</span>
+                    <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.25)" }}>triage-console</span>
                   </div>
                   <div style={{ maxHeight: "150px", overflowY: "auto", padding: "10px 14px", fontSize: "10.5px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.9 }}>
                     {logs.slice(-20).map((l, i) => (
@@ -409,7 +409,7 @@ export default function SupportTriageSystem() {
               )}
 
               {error && (
-                <div style={{ padding: "12px 16px", borderRadius: "10px", background: "rgba(255,68,68,.06)", border: "1px solid rgba(255,68,68,.15)", fontSize: "12px", color: "#FF6B6B", fontFamily: "mono" }}>⚠ {error}</div>
+                <div style={{ padding: "12px 16px", borderRadius: "10px", background: "rgba(255,68,68,.06)", border: "1px solid rgba(255,68,68,.15)", fontSize: "12px", color: "#FF6B6B", fontFamily: "'IBM Plex Mono', monospace" }}>⚠ {error}</div>
               )}
             </div>
 
@@ -420,24 +420,24 @@ export default function SupportTriageSystem() {
                 <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "14px", padding: "18px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
                     <div>
-                      <div style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.25)", fontWeight: 600, letterSpacing: "1px", marginBottom: "6px" }}>{sel.id}</div>
+                      <div style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.25)", fontWeight: 600, letterSpacing: "1px", marginBottom: "6px" }}>{sel.id}</div>
                       <div style={{ fontSize: "14px", fontWeight: 700, color: "rgba(255,255,255,0.85)", lineHeight: 1.4 }}>{sel.classification.summary}</div>
                     </div>
-                    <span style={{ fontSize: "11px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>{new Date(sel.createdAt).toLocaleTimeString()}</span>
+                    <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>{new Date(sel.createdAt).toLocaleTimeString()}</span>
                   </div>
 
                   {/* Tags row */}
                   <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "14px" }}>
-                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "mono", background: priCfg?.bg, color: priCfg?.color, letterSpacing: "0.5px" }}>
+                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", background: priCfg?.bg, color: priCfg?.color, letterSpacing: "0.5px" }}>
                       {priCfg?.icon} {sel.classification.priority} — {priCfg?.label}
                     </span>
-                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "mono", background: (catCfg?.color || "#999") + "12", color: catCfg?.color }}>
+                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", background: (catCfg?.color || "#999") + "12", color: catCfg?.color }}>
                       {catCfg?.icon} {sel.classification.category.toUpperCase()}
                     </span>
-                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "mono", background: (sentCfg?.color || "#999") + "12", color: sentCfg?.color }}>
+                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", background: (sentCfg?.color || "#999") + "12", color: sentCfg?.color }}>
                       {sentCfg?.icon} {sentCfg?.label}
                     </span>
-                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "mono", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.4)" }}>
+                    <span style={{ fontSize: "10px", padding: "4px 10px", borderRadius: "6px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.4)" }}>
                       🎯 {sel.classification.confidence}% conf
                     </span>
                   </div>
@@ -445,17 +445,17 @@ export default function SupportTriageSystem() {
                   {/* Urgency signals */}
                   {sel.classification.urgency_signals?.length > 0 && (
                     <div style={{ marginBottom: "12px" }}>
-                      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "6px" }}>URGENCY SIGNALS</div>
+                      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "6px" }}>URGENCY SIGNALS</div>
                       <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
                         {sel.classification.urgency_signals.map((s, i) => (
-                          <span key={i} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(255,77,77,0.06)", color: "rgba(255,77,77,0.7)", fontFamily: "mono" }}>{s}</span>
+                          <span key={i} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(255,77,77,0.06)", color: "rgba(255,77,77,0.7)", fontFamily: "'IBM Plex Mono', monospace" }}>{s}</span>
                         ))}
                       </div>
                     </div>
                   )}
 
                   {/* Customer info */}
-                  <div style={{ display: "flex", gap: "12px", fontSize: "11px", color: "rgba(255,255,255,0.35)", fontFamily: "mono" }}>
+                  <div style={{ display: "flex", gap: "12px", fontSize: "11px", color: "rgba(255,255,255,0.35)", fontFamily: "'IBM Plex Mono', monospace" }}>
                     {sel.classification.customer_name && sel.classification.customer_name !== "Unknown" && <span>👤 {sel.classification.customer_name}</span>}
                     {sel.classification.customer_email && sel.classification.customer_email !== "Unknown" && <span>📧 {sel.classification.customer_email}</span>}
                   </div>
@@ -466,7 +466,7 @@ export default function SupportTriageSystem() {
 
                 {/* Routing */}
                 <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "12px", padding: "14px" }}>
-                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "10px" }}>ROUTING</div>
+                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "10px" }}>ROUTING</div>
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
                       <span style={{ color: "rgba(255,255,255,0.4)" }}>Team</span>
@@ -484,12 +484,12 @@ export default function SupportTriageSystem() {
                     )}
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px" }}>
                       <span style={{ color: "rgba(255,255,255,0.3)" }}>Est. resolution</span>
-                      <span style={{ color: "rgba(255,255,255,0.5)", fontFamily: "mono" }}>{sel.routing.estimated_resolution}</span>
+                      <span style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace" }}>{sel.routing.estimated_resolution}</span>
                     </div>
                     {sel.routing.suggested_tags?.length > 0 && (
                       <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginTop: "4px" }}>
                         {sel.routing.suggested_tags.map((t, i) => (
-                          <span key={i} style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.3)", fontFamily: "mono" }}>#{t}</span>
+                          <span key={i} style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.3)", fontFamily: "'IBM Plex Mono', monospace" }}>#{t}</span>
                         ))}
                       </div>
                     )}
@@ -499,8 +499,8 @@ export default function SupportTriageSystem() {
                 {/* KB Matches */}
                 <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "12px", padding: "14px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                    <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>KB MATCHES</span>
-                    <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", fontFamily: "mono", fontWeight: 600, background: sel.kbCoverage === "full" ? "rgba(52,211,153,0.1)" : sel.kbCoverage === "partial" ? "rgba(251,191,36,0.1)" : "rgba(255,255,255,0.04)", color: sel.kbCoverage === "full" ? "#34D399" : sel.kbCoverage === "partial" ? "#FBBF24" : "rgba(255,255,255,0.3)" }}>
+                    <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>KB MATCHES</span>
+                    <span style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600, background: sel.kbCoverage === "full" ? "rgba(52,211,153,0.1)" : sel.kbCoverage === "partial" ? "rgba(251,191,36,0.1)" : "rgba(255,255,255,0.04)", color: sel.kbCoverage === "full" ? "#34D399" : sel.kbCoverage === "partial" ? "#FBBF24" : "rgba(255,255,255,0.3)" }}>
                       {sel.kbCoverage} coverage
                     </span>
                   </div>
@@ -516,8 +516,8 @@ export default function SupportTriageSystem() {
                 {/* Drafted Response */}
                 <div style={{ background: "rgba(167,139,250,0.04)", border: "1px solid rgba(167,139,250,0.12)", borderRadius: "12px", padding: "14px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                    <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "#A78BFA", fontFamily: "mono" }}>AI-DRAFTED RESPONSE</span>
-                    <button onClick={() => navigator.clipboard?.writeText(sel.draft)} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", border: "1px solid rgba(167,139,250,0.2)", background: "rgba(167,139,250,0.06)", color: "#A78BFA", cursor: "pointer", fontWeight: 600, fontFamily: "mono" }}>COPY</button>
+                    <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "#A78BFA", fontFamily: "'IBM Plex Mono', monospace" }}>AI-DRAFTED RESPONSE</span>
+                    <button onClick={() => navigator.clipboard?.writeText(sel.draft)} style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", border: "1px solid rgba(167,139,250,0.2)", background: "rgba(167,139,250,0.06)", color: "#A78BFA", cursor: "pointer", fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>COPY</button>
                   </div>
                   <div style={{ fontSize: "12.5px", lineHeight: 1.7, color: "rgba(255,255,255,0.7)", whiteSpace: "pre-wrap" }}>{sel.draft}</div>
                 </div>
@@ -549,15 +549,15 @@ export default function SupportTriageSystem() {
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.8)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.classification.summary}</div>
                         <div style={{ display: "flex", gap: "6px", marginTop: "6px" }}>
-                          <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: pc?.bg, color: pc?.color, fontWeight: 700, fontFamily: "mono" }}>{t.classification.priority}</span>
-                          <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: (cc?.color || "#999") + "10", color: cc?.color, fontWeight: 600, fontFamily: "mono" }}>{t.classification.category}</span>
-                          {t.routing.escalation_needed && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(255,77,77,0.08)", color: "#FF6B6B", fontWeight: 600, fontFamily: "mono" }}>ESCALATED</span>}
-                          {t.routing.auto_resolve_candidate && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontWeight: 600, fontFamily: "mono" }}>AUTO-RESOLVE</span>}
+                          <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: pc?.bg, color: pc?.color, fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>{t.classification.priority}</span>
+                          <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: (cc?.color || "#999") + "10", color: cc?.color, fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>{t.classification.category}</span>
+                          {t.routing.escalation_needed && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(255,77,77,0.08)", color: "#FF6B6B", fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>ESCALATED</span>}
+                          {t.routing.auto_resolve_candidate && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>AUTO-RESOLVE</span>}
                         </div>
                       </div>
                       <div style={{ textAlign: "right", flexShrink: 0 }}>
-                        <div style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>{t.id}</div>
-                        <div style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.15)", marginTop: "2px" }}>→ {t.routing.primary_team}</div>
+                        <div style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>{t.id}</div>
+                        <div style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.15)", marginTop: "2px" }}>→ {t.routing.primary_team}</div>
                       </div>
                     </div>
                   );
@@ -583,7 +583,7 @@ export default function SupportTriageSystem() {
 
             {/* Add new entry */}
             <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "12px", padding: "16px", marginBottom: "16px" }}>
-              <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "10px" }}>ADD ARTICLE</div>
+              <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "10px" }}>ADD ARTICLE</div>
               <div style={{ display: "flex", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
                 <select value={newKbCat} onChange={e => setNewKbCat(e.target.value)} style={{ padding: "8px", borderRadius: "8px", background: "rgba(0,0,0,.2)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "12px" }}>
                   {Object.keys(CATEGORY_CONFIG).map(c => <option key={c} value={c}>{c}</option>)}
@@ -630,7 +630,7 @@ export default function SupportTriageSystem() {
                   ].map(s => (
                     <div key={s.label} style={{ padding: "16px", borderRadius: "12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)", textAlign: "center" }}>
                       <div style={{ fontSize: "24px", fontWeight: 800, color: s.color, fontFamily: "'IBM Plex Mono', monospace" }}>{s.value}</div>
-                      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", marginTop: "4px", fontFamily: "mono" }}>{s.label}</div>
+                      <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", marginTop: "4px", fontFamily: "'IBM Plex Mono', monospace" }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -640,7 +640,7 @@ export default function SupportTriageSystem() {
                   <MiniChart label="BY CATEGORY" color="#60A5FA" data={Object.entries(analytics.byCategory).map(([k, v]) => ({ label: k.slice(0, 4), value: v, color: CATEGORY_CONFIG[k]?.color }))} />
                   <MiniChart label="BY SENTIMENT" color="#34D399" data={Object.entries(analytics.bySentiment).map(([k, v]) => ({ label: k.slice(0, 4), value: v, color: SENTIMENT_CONFIG[k]?.color }))} />
                   <div style={{ padding: "14px", borderRadius: "10px", background: "rgba(0,0,0,0.15)" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.25)", fontFamily: "mono", marginBottom: "12px" }}>ROUTING BREAKDOWN</div>
+                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "12px" }}>ROUTING BREAKDOWN</div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                       {Object.entries(analytics.byCategory).sort((a, b) => b[1] - a[1]).map(([cat, count]) => {
                         const cfg = CATEGORY_CONFIG[cat];
@@ -650,7 +650,7 @@ export default function SupportTriageSystem() {
                             <div style={{ flex: 1, height: "4px", borderRadius: "2px", background: "rgba(255,255,255,0.04)", overflow: "hidden" }}>
                               <div style={{ width: `${(count / analytics.total) * 100}%`, height: "100%", borderRadius: "2px", background: cfg?.color }} />
                             </div>
-                            <span style={{ fontSize: "10px", fontFamily: "mono", color: cfg?.color, minWidth: "24px", textAlign: "right" }}>{count}</span>
+                            <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: cfg?.color, minWidth: "24px", textAlign: "right" }}>{count}</span>
                           </div>
                         );
                       })}

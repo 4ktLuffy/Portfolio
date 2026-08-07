@@ -140,7 +140,7 @@ const ActionItem = ({ item, index }) => (
       border: "2px solid rgba(255,255,255,0.12)", display: "flex",
       alignItems: "center", justifyContent: "center", marginTop: "1px",
     }}>
-      <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "mono", fontWeight: 700 }}>
+      <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700 }}>
         {String(index + 1).padStart(2, "0")}
       </span>
     </div>
@@ -148,22 +148,22 @@ const ActionItem = ({ item, index }) => (
       <div style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)", lineHeight: 1.5, marginBottom: "8px" }}>{item.task}</div>
       <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
         {item.owner && (
-          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontWeight: 600, fontFamily: "mono" }}>
+          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>
             👤 {item.owner}
           </span>
         )}
         {item.deadline && (
-          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontWeight: 600, fontFamily: "mono" }}>
+          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace" }}>
             📅 {item.deadline}
           </span>
         )}
         {item.priority && (
-          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: (PRIORITY_COLORS[item.priority] || "#999") + "12", color: PRIORITY_COLORS[item.priority] || "#999", fontWeight: 700, fontFamily: "mono", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: (PRIORITY_COLORS[item.priority] || "#999") + "12", color: PRIORITY_COLORS[item.priority] || "#999", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", textTransform: "uppercase" }}>
             {item.priority}
           </span>
         )}
         {item.category && (
-          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.3)", fontFamily: "mono" }}>
+          <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "5px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.3)", fontFamily: "'IBM Plex Mono', monospace" }}>
             {item.category}
           </span>
         )}
@@ -357,7 +357,7 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
               <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "linear-gradient(135deg, #FBBF24, #F59E0B)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>📋</div>
               <h1 style={{ fontSize: "20px", fontWeight: 800, margin: 0, letterSpacing: "-0.3px" }}>Meeting → Actions AI</h1>
-              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(251,191,36,0.08)", color: "#FBBF24", fontWeight: 700, fontFamily: "mono", letterSpacing: "0.8px" }}>v1.0</span>
+              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(251,191,36,0.08)", color: "#FBBF24", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.8px" }}>v1.0</span>
             </div>
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", margin: 0 }}>Paste a meeting transcript → get structured action items, decisions, and PM-ready exports</p>
           </div>
@@ -365,14 +365,14 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
             {keySaved ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 12px", borderRadius: "8px", background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)" }}>
                 <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34D399" }} />
-                <span style={{ fontSize: "11px", fontFamily: "mono", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
+                <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
                 <button onClick={() => { setKeySaved(false); setApiKey(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", cursor: "pointer", fontSize: "12px" }}>×</button>
               </div>
             ) : (
               <div style={{ display: "flex", gap: "5px" }}>
-                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "mono", width: "180px" }} />
+                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", width: "180px" }} />
                 <button onClick={() => setKeyVisible(!keyVisible)} style={{ padding: "6px", borderRadius: "7px", border: "1px solid rgba(255,255,255,.05)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.3)", cursor: "pointer" }}>{keyVisible ? "🙈" : "👁️"}</button>
-                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#FBBF24" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#000" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "mono" }}>CONNECT</button>
+                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#FBBF24" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#000" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>CONNECT</button>
               </div>
             )}
           </div>
@@ -396,7 +396,7 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "12px", padding: "16px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px", flexWrap: "wrap", gap: "6px" }}>
-                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>MEETING TRANSCRIPT</span>
+                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>MEETING TRANSCRIPT</span>
                   <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
                     {Object.entries(SAMPLE_MEETINGS).map(([key, s]) => (
                       <button key={key} onClick={() => setInput(s.text)} style={{
@@ -416,7 +416,7 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                 }} />
                 <button onClick={() => input.trim() && processMeeting(input.trim())} disabled={processing || !input.trim() || !keySaved} style={{
                   marginTop: "10px", width: "100%", padding: "12px", borderRadius: "9px", border: "none",
-                  fontWeight: 700, fontSize: "12px", fontFamily: "mono",
+                  fontWeight: 700, fontSize: "12px", fontFamily: "'IBM Plex Mono', monospace",
                   cursor: (processing || !input.trim() || !keySaved) ? "not-allowed" : "pointer",
                   background: processing ? "rgba(251,191,36,0.08)" : (!input.trim() || !keySaved) ? "rgba(255,255,255,.03)" : "linear-gradient(135deg, #FBBF24, #F59E0B)",
                   color: (!input.trim() || !keySaved) ? "rgba(255,255,255,.12)" : processing ? "#FBBF24" : "#000",
@@ -439,7 +439,7 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                           background: isDone ? "#FBBF24" : isActive ? "#FBBF2466" : "rgba(255,255,255,0.04)",
                           transition: "background 0.3s",
                         }} />
-                        <span style={{ fontSize: "9px", fontFamily: "mono", color: isDone ? "#FBBF24" : "rgba(255,255,255,0.2)", fontWeight: 600 }}>
+                        <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: isDone ? "#FBBF24" : "rgba(255,255,255,0.2)", fontWeight: 600 }}>
                           {["ACTIONS", "SUMMARY", "EXPORT"][i]}
                         </span>
                       </div>
@@ -453,9 +453,9 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                 <div style={{ background: "#090A0D", border: "1px solid rgba(255,255,255,0.03)", borderRadius: "10px", overflow: "hidden" }}>
                   <div style={{ padding: "7px 12px", display: "flex", alignItems: "center", gap: "6px", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                     <div style={{ display: "flex", gap: "4px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FF5F57" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FFBD2E" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#28CA41" }} /></div>
-                    <span style={{ fontSize: "9px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>meeting-pipeline</span>
+                    <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>meeting-pipeline</span>
                   </div>
-                  <div style={{ maxHeight: "100px", overflowY: "auto", padding: "8px 12px", fontSize: "10px", fontFamily: "mono", lineHeight: 1.8 }}>
+                  <div style={{ maxHeight: "100px", overflowY: "auto", padding: "8px 12px", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.8 }}>
                     {logs.map((l, i) => (
                       <div key={i}>
                         <span style={{ color: "rgba(255,255,255,0.1)" }}>{l.time} </span>
@@ -467,7 +467,7 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                 </div>
               )}
 
-              {error && <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "mono" }}>⚠ {error}</div>}
+              {error && <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "'IBM Plex Mono', monospace" }}>⚠ {error}</div>}
             </div>
 
             {/* Right: Results */}
@@ -478,21 +478,21 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                     <div>
                       <div style={{ display: "flex", gap: "6px", alignItems: "center", marginBottom: "6px" }}>
-                        <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: (typeColors[s?.type] || "#999") + "12", color: typeColors[s?.type] || "#999", fontWeight: 700, fontFamily: "mono", textTransform: "uppercase" }}>{s?.type || "meeting"}</span>
-                        <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.3)", fontFamily: "mono" }}>{s?.sentiment || "neutral"}</span>
+                        <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: (typeColors[s?.type] || "#999") + "12", color: typeColors[s?.type] || "#999", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", textTransform: "uppercase" }}>{s?.type || "meeting"}</span>
+                        <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.3)", fontFamily: "'IBM Plex Mono', monospace" }}>{s?.sentiment || "neutral"}</span>
                       </div>
                       <h3 style={{ fontSize: "16px", fontWeight: 700, margin: 0, color: "rgba(255,255,255,0.85)" }}>{s?.title || "Meeting"}</h3>
                     </div>
                     <div style={{ display: "flex", gap: "4px" }}>
-                      <button onClick={handleExportMarkdown} style={{ padding: "5px 8px", borderRadius: "5px", border: "1px solid rgba(251,191,36,0.15)", background: "rgba(251,191,36,0.04)", color: "#FBBF24", fontSize: "9px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>📝 MD</button>
-                      <button onClick={handleExportJSON} style={{ padding: "5px 8px", borderRadius: "5px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "9px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>{ } JSON</button>
+                      <button onClick={handleExportMarkdown} style={{ padding: "5px 8px", borderRadius: "5px", border: "1px solid rgba(251,191,36,0.15)", background: "rgba(251,191,36,0.04)", color: "#FBBF24", fontSize: "9px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>📝 MD</button>
+                      <button onClick={handleExportJSON} style={{ padding: "5px 8px", borderRadius: "5px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "9px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>{ } JSON</button>
                     </div>
                   </div>
                   <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, margin: "0 0 10px" }}>{s?.executive_summary}</p>
                   {s?.attendees?.length > 0 && (
                     <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
                       {s.attendees.map((a, i) => (
-                        <span key={i} style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.35)", fontFamily: "mono" }}>{a}</span>
+                        <span key={i} style={{ fontSize: "10px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.35)", fontFamily: "'IBM Plex Mono', monospace" }}>{a}</span>
                       ))}
                     </div>
                   )}
@@ -507,8 +507,8 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                     { value: ((results.elapsed) / 1000).toFixed(1) + "s", label: "TIME", color: "#60A5FA" },
                   ].map(stat => (
                     <div key={stat.label} style={{ flex: 1, padding: "10px", borderRadius: "9px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                      <div style={{ fontSize: "18px", fontWeight: 800, color: stat.color, fontFamily: "mono" }}>{stat.value}</div>
-                      <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.8px", marginTop: "2px", fontFamily: "mono" }}>{stat.label}</div>
+                      <div style={{ fontSize: "18px", fontWeight: 800, color: stat.color, fontFamily: "'IBM Plex Mono', monospace" }}>{stat.value}</div>
+                      <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.8px", marginTop: "2px", fontFamily: "'IBM Plex Mono', monospace" }}>{stat.label}</div>
                     </div>
                   ))}
                 </div>
@@ -550,8 +550,8 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                         <div key={`b${i}`} style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(255,77,77,0.03)", border: "1px solid rgba(255,77,77,0.08)", animation: "fadeIn 0.3s ease" }}>
                           <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)", marginBottom: "4px" }}>🚧 {b.description}</div>
                           <div style={{ display: "flex", gap: "6px" }}>
-                            {b.owner && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "mono" }}>👤 {b.owner}</span>}
-                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: (PRIORITY_COLORS[b.severity] || "#999") + "10", color: PRIORITY_COLORS[b.severity] || "#999", fontFamily: "mono", fontWeight: 700 }}>{b.severity}</span>
+                            {b.owner && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "'IBM Plex Mono', monospace" }}>👤 {b.owner}</span>}
+                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: (PRIORITY_COLORS[b.severity] || "#999") + "10", color: PRIORITY_COLORS[b.severity] || "#999", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700 }}>{b.severity}</span>
                           </div>
                         </div>
                       ))}
@@ -569,18 +569,18 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                               <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>{t.title}</div>
                               {t.description && <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "3px", lineHeight: 1.4 }}>{t.description}</div>}
                             </div>
-                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: t.priority === "P1" ? "rgba(255,77,77,0.08)" : t.priority === "P2" ? "rgba(251,191,36,0.08)" : "rgba(52,211,153,0.08)", color: t.priority === "P1" ? "#FF4D4D" : t.priority === "P2" ? "#FBBF24" : "#34D399", fontWeight: 700, fontFamily: "mono" }}>{t.priority}</span>
+                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: t.priority === "P1" ? "rgba(255,77,77,0.08)" : t.priority === "P2" ? "rgba(251,191,36,0.08)" : "rgba(52,211,153,0.08)", color: t.priority === "P1" ? "#FF4D4D" : t.priority === "P2" ? "#FBBF24" : "#34D399", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>{t.priority}</span>
                           </div>
                           <div style={{ display: "flex", gap: "5px", marginTop: "8px", flexWrap: "wrap" }}>
-                            {t.assignee && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "mono" }}>👤 {t.assignee}</span>}
-                            {t.due && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "mono" }}>📅 {t.due}</span>}
-                            {(t.labels || []).map((l, j) => <span key={j} style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.25)", fontFamily: "mono" }}>{l}</span>)}
+                            {t.assignee && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "'IBM Plex Mono', monospace" }}>👤 {t.assignee}</span>}
+                            {t.due && <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "'IBM Plex Mono', monospace" }}>📅 {t.due}</span>}
+                            {(t.labels || []).map((l, j) => <span key={j} style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace" }}>{l}</span>)}
                           </div>
                         </div>
                       ))}
                       {(results.exportData?.dependencies || []).length > 0 && (
                         <>
-                          <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.15)", fontFamily: "mono", marginTop: "8px" }}>DEPENDENCIES</div>
+                          <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.15)", fontFamily: "'IBM Plex Mono', monospace", marginTop: "8px" }}>DEPENDENCIES</div>
                           {results.exportData.dependencies.map((d, i) => (
                             <div key={i} style={{ padding: "8px 12px", borderRadius: "8px", background: "rgba(255,255,255,0.01)", border: "1px dashed rgba(255,255,255,0.06)", fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>
                               <strong style={{ color: "rgba(255,255,255,0.6)" }}>{d.task}</strong> → depends on: {d.depends_on}
@@ -615,13 +615,13 @@ Be specific about the task. Include ALL action items mentioned, even implicit on
                     <div>
                       <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>{h.title}</div>
                       <div style={{ display: "flex", gap: "6px", marginTop: "5px" }}>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: (typeColors[h.type] || "#999") + "10", color: typeColors[h.type] || "#999", fontFamily: "mono" }}>{h.type}</span>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(251,191,36,0.08)", color: "#FBBF24", fontFamily: "mono" }}>{h.actionCount} actions</span>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontFamily: "mono" }}>{h.decisionCount} decisions</span>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>{h.time}</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: (typeColors[h.type] || "#999") + "10", color: typeColors[h.type] || "#999", fontFamily: "'IBM Plex Mono', monospace" }}>{h.type}</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(251,191,36,0.08)", color: "#FBBF24", fontFamily: "'IBM Plex Mono', monospace" }}>{h.actionCount} actions</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontFamily: "'IBM Plex Mono', monospace" }}>{h.decisionCount} decisions</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>{h.time}</span>
                       </div>
                     </div>
-                    <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.15)" }}>{h.timestamp}</span>
+                    <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.15)" }}>{h.timestamp}</span>
                   </div>
                 ))}
               </div>

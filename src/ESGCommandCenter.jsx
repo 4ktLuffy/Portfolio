@@ -68,7 +68,7 @@ const AGENT_DEFS = [
 const RiskBadge = ({ level }) => {
   const c = { critical: "#FF4D4D", high: "#FF9F43", medium: "#FBBF24", low: "#34D399" };
   return (
-    <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: (c[level] || "#999") + "12", color: c[level] || "#999", fontWeight: 700, fontFamily: "mono", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+    <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: (c[level] || "#999") + "12", color: c[level] || "#999", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", textTransform: "uppercase", letterSpacing: "0.5px" }}>
       {level}
     </span>
   );
@@ -292,7 +292,7 @@ Return ONLY valid JSON:
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
               <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "linear-gradient(135deg, #34D399, #60A5FA)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>🌍</div>
               <h1 style={{ fontSize: "20px", fontWeight: 800, margin: 0 }}>ESG Compliance Command Center</h1>
-              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontWeight: 700, fontFamily: "mono" }}>v1.0</span>
+              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>v1.0</span>
             </div>
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", margin: 0 }}>5-agent pipeline with adversarial Red Teaming — supply chain ESG risk analysis & CSRD reporting</p>
           </div>
@@ -300,20 +300,20 @@ Return ONLY valid JSON:
             {keySaved ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 12px", borderRadius: "8px", background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)" }}>
                 <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34D399" }} />
-                <span style={{ fontSize: "11px", fontFamily: "mono", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
+                <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
                 <button onClick={() => { setKeySaved(false); setApiKey(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", cursor: "pointer", fontSize: "12px" }}>×</button>
               </div>
             ) : (
               <div style={{ display: "flex", gap: "5px" }}>
-                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "mono", width: "180px" }} />
+                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", width: "180px" }} />
                 <button onClick={() => setKeyVisible(!keyVisible)} style={{ padding: "6px", borderRadius: "7px", border: "1px solid rgba(255,255,255,.05)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.3)", cursor: "pointer" }}>{keyVisible ? "🙈" : "👁️"}</button>
-                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#34D399" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#000" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "mono" }}>CONNECT</button>
+                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#34D399" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#000" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>CONNECT</button>
               </div>
             )}
             {agentResults.writer && (
               <div style={{ display: "flex", gap: "4px" }}>
-                <button onClick={handleExportReport} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(52,211,153,0.15)", background: "rgba(52,211,153,0.04)", color: "#34D399", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>📝 Report</button>
-                <button onClick={handleExport} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>{ } JSON</button>
+                <button onClick={handleExportReport} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(52,211,153,0.15)", background: "rgba(52,211,153,0.04)", color: "#34D399", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>📝 Report</button>
+                <button onClick={handleExport} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>{ } JSON</button>
               </div>
             )}
           </div>
@@ -333,7 +333,7 @@ Return ONLY valid JSON:
                   borderRadius: "7px", transition: "all 0.3s",
                 }}>
                   <span style={{ fontSize: "13px" }}>{agent.icon}</span>
-                  <span style={{ fontSize: "9px", fontWeight: 700, color: isDone || isActive ? agent.color : "rgba(255,255,255,0.2)", fontFamily: "mono", letterSpacing: "0.3px" }}>
+                  <span style={{ fontSize: "9px", fontWeight: 700, color: isDone || isActive ? agent.color : "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.3px" }}>
                     {agent.name.split(" ")[0].toUpperCase()}
                   </span>
                   {isActive && <span style={{ fontSize: "8px", color: agent.color, animation: "pulse 1s infinite" }}>●</span>}
@@ -342,7 +342,7 @@ Return ONLY valid JSON:
                 {i < 3 && <span style={{ color: isDone ? "#34D399" : "rgba(255,255,255,0.08)", fontSize: "10px" }}>→</span>}
                 {i === 3 && <span style={{ color: isDone ? "#34D399" : "rgba(255,255,255,0.08)", fontSize: "10px" }}>→</span>}
                 {i === 4 && iterationCount > 0 && !redTeamPass && currentAgent < 5 && (
-                  <span style={{ fontSize: "9px", color: "#FF4D4D", fontFamily: "mono", marginLeft: "4px" }}>↩ LOOP</span>
+                  <span style={{ fontSize: "9px", color: "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace", marginLeft: "4px" }}>↩ LOOP</span>
                 )}
               </div>
             );
@@ -352,7 +352,7 @@ Return ONLY valid JSON:
         {/* Input */}
         <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "12px", padding: "16px", marginBottom: "16px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px", flexWrap: "wrap", gap: "6px" }}>
-            <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>SUPPLY CHAIN DATA</span>
+            <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>SUPPLY CHAIN DATA</span>
             <div style={{ display: "flex", gap: "4px" }}>
               {Object.entries(SAMPLE_DATA).map(([key, s]) => (
                 <button key={key} onClick={() => setInput(s.text)} style={{
@@ -372,7 +372,7 @@ Return ONLY valid JSON:
           }} />
           <button onClick={() => input.trim() && runPipeline(input.trim())} disabled={processing || !input.trim() || !keySaved} style={{
             marginTop: "10px", width: "100%", padding: "12px", borderRadius: "9px", border: "none",
-            fontWeight: 700, fontSize: "12px", fontFamily: "mono",
+            fontWeight: 700, fontSize: "12px", fontFamily: "'IBM Plex Mono', monospace",
             cursor: (processing || !input.trim() || !keySaved) ? "not-allowed" : "pointer",
             background: processing ? "rgba(52,211,153,0.08)" : (!input.trim() || !keySaved) ? "rgba(255,255,255,.03)" : "linear-gradient(135deg, #34D399, #60A5FA)",
             color: (!input.trim() || !keySaved) ? "rgba(255,255,255,.12)" : processing ? "#34D399" : "#fff",
@@ -386,9 +386,9 @@ Return ONLY valid JSON:
           <div style={{ background: "#080A0D", border: "1px solid rgba(255,255,255,0.03)", borderRadius: "10px", overflow: "hidden", marginBottom: "16px" }}>
             <div style={{ padding: "7px 12px", display: "flex", alignItems: "center", gap: "6px", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
               <div style={{ display: "flex", gap: "4px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FF5F57" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FFBD2E" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#28CA41" }} /></div>
-              <span style={{ fontSize: "9px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>esg-pipeline — {logs.length} events</span>
+              <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>esg-pipeline — {logs.length} events</span>
             </div>
-            <div style={{ maxHeight: "120px", overflowY: "auto", padding: "8px 12px", fontSize: "10px", fontFamily: "mono", lineHeight: 1.8 }}>
+            <div style={{ maxHeight: "120px", overflowY: "auto", padding: "8px 12px", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.8 }}>
               {logs.map((l, i) => (
                 <div key={i}><span style={{ color: "rgba(255,255,255,0.1)" }}>{l.time} </span><span style={{ color: l.lvl === "error" ? "#F87171" : l.lvl === "success" ? "#34D399" : l.lvl === "warn" ? "#FBBF24" : "#60A5FA", fontWeight: 600 }}>{l.lvl.slice(0, 4).toUpperCase()} </span><span style={{ color: "rgba(255,255,255,0.4)" }}>{l.msg}</span></div>
               ))}
@@ -396,7 +396,7 @@ Return ONLY valid JSON:
           </div>
         )}
 
-        {error && <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "mono", marginBottom: "16px" }}>⚠ {error}</div>}
+        {error && <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "16px" }}>⚠ {error}</div>}
 
         {/* Results */}
         {(currentAgent >= 5 || scores.length > 0) && (
@@ -419,20 +419,20 @@ Return ONLY valid JSON:
                 {agentResults.assessor?.portfolio_risk_score !== undefined && (
                   <div style={{ display: "flex", gap: "10px", marginBottom: "4px" }}>
                     <div style={{ flex: 1, padding: "16px", borderRadius: "11px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                      <div style={{ fontSize: "28px", fontWeight: 800, color: agentResults.assessor.portfolio_risk_score > 60 ? "#34D399" : agentResults.assessor.portfolio_risk_score > 40 ? "#FBBF24" : "#FF4D4D", fontFamily: "mono" }}>{agentResults.assessor.portfolio_risk_score}</div>
-                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "mono" }}>PORTFOLIO ESG SCORE</div>
+                      <div style={{ fontSize: "28px", fontWeight: 800, color: agentResults.assessor.portfolio_risk_score > 60 ? "#34D399" : agentResults.assessor.portfolio_risk_score > 40 ? "#FBBF24" : "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace" }}>{agentResults.assessor.portfolio_risk_score}</div>
+                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "'IBM Plex Mono', monospace" }}>PORTFOLIO ESG SCORE</div>
                     </div>
                     <div style={{ flex: 1, padding: "16px", borderRadius: "11px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#60A5FA", fontFamily: "mono" }}>{scores.length}</div>
-                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "mono" }}>SUPPLIERS SCORED</div>
+                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#60A5FA", fontFamily: "'IBM Plex Mono', monospace" }}>{scores.length}</div>
+                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "'IBM Plex Mono', monospace" }}>SUPPLIERS SCORED</div>
                     </div>
                     <div style={{ flex: 1, padding: "16px", borderRadius: "11px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#FF4D4D", fontFamily: "mono" }}>{(agentResults.assessor?.high_risk_suppliers || []).length}</div>
-                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "mono" }}>HIGH RISK</div>
+                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace" }}>{(agentResults.assessor?.high_risk_suppliers || []).length}</div>
+                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "'IBM Plex Mono', monospace" }}>HIGH RISK</div>
                     </div>
                     <div style={{ flex: 1, padding: "16px", borderRadius: "11px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#FBBF24", fontFamily: "mono" }}>{iterationCount}</div>
-                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "mono" }}>RED TEAM ROUNDS</div>
+                      <div style={{ fontSize: "28px", fontWeight: 800, color: "#FBBF24", fontFamily: "'IBM Plex Mono', monospace" }}>{iterationCount}</div>
+                      <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", letterSpacing: "1px", marginTop: "4px", fontFamily: "'IBM Plex Mono', monospace" }}>RED TEAM ROUNDS</div>
                     </div>
                   </div>
                 )}
@@ -441,7 +441,7 @@ Return ONLY valid JSON:
                   <div key={i} style={{ padding: "14px", borderRadius: "10px", background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", animation: "fadeIn 0.3s ease", animationDelay: `${i * 0.06}s`, animationFillMode: "both" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>{s.id}</span>
+                        <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>{s.id}</span>
                         <span style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{s.name}</span>
                       </div>
                       <RiskBadge level={s.risk_level} />
@@ -449,14 +449,14 @@ Return ONLY valid JSON:
                     <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
                       {[{ label: "ENV", val: s.environmental_score, color: "#34D399" }, { label: "SOC", val: s.social_score, color: "#60A5FA" }, { label: "GOV", val: s.governance_score, color: "#A78BFA" }, { label: "ESG", val: s.overall_esg, color: "#FBBF24" }].map(m => (
                         <div key={m.label} style={{ flex: 1, textAlign: "center", padding: "6px", borderRadius: "6px", background: "rgba(0,0,0,0.15)" }}>
-                          <div style={{ fontSize: "14px", fontWeight: 800, color: m.val >= 70 ? m.color : m.val >= 40 ? "#FBBF24" : "#FF4D4D", fontFamily: "mono" }}>{m.val}</div>
-                          <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>{m.label}</div>
+                          <div style={{ fontSize: "14px", fontWeight: 800, color: m.val >= 70 ? m.color : m.val >= 40 ? "#FBBF24" : "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace" }}>{m.val}</div>
+                          <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>{m.label}</div>
                         </div>
                       ))}
                     </div>
                     {s.key_risks?.length > 0 && (
                       <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
-                        {s.key_risks.map((r, j) => <span key={j} style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,77,77,0.06)", color: "rgba(255,77,77,0.7)", fontFamily: "mono" }}>{r}</span>)}
+                        {s.key_risks.map((r, j) => <span key={j} style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,77,77,0.06)", color: "rgba(255,77,77,0.7)", fontFamily: "'IBM Plex Mono', monospace" }}>{r}</span>)}
                       </div>
                     )}
                   </div>
@@ -488,16 +488,16 @@ Return ONLY valid JSON:
                   return (
                     <div key={idx} style={{ background: rd.passed ? "rgba(52,211,153,0.03)" : "rgba(255,77,77,0.03)", border: `1px solid ${rd.passed ? "rgba(52,211,153,0.1)" : "rgba(255,77,77,0.1)"}`, borderRadius: "12px", padding: "16px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                        <span style={{ fontSize: "10px", fontWeight: 700, fontFamily: "mono", color: rd.passed ? "#34D399" : "#FF4D4D", letterSpacing: "0.8px" }}>
+                        <span style={{ fontSize: "10px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", color: rd.passed ? "#34D399" : "#FF4D4D", letterSpacing: "0.8px" }}>
                           🔴 RED TEAM — ITERATION {idx + 1} — {rd.passed ? "PASSED" : `FAILED (${rd.severity})`}
                         </span>
-                        <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.25)" }}>Confidence: {rd.confidence}%</span>
+                        <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.25)" }}>Confidence: {rd.confidence}%</span>
                       </div>
                       <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", marginBottom: "10px", lineHeight: 1.5 }}>{rd.overall_assessment}</div>
                       {(rd.issues_found || []).map((issue, j) => (
                         <div key={j} style={{ padding: "10px", borderRadius: "8px", background: "rgba(0,0,0,0.15)", marginBottom: "6px" }}>
                           <div style={{ display: "flex", gap: "6px", alignItems: "center", marginBottom: "4px" }}>
-                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,77,77,0.08)", color: "#FF4D4D", fontFamily: "mono", fontWeight: 700, textTransform: "uppercase" }}>{issue.type}</span>
+                            <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(255,77,77,0.08)", color: "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 700, textTransform: "uppercase" }}>{issue.type}</span>
                           </div>
                           <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{issue.description}</div>
                           {issue.fix_suggestion && <div style={{ fontSize: "11px", color: "rgba(52,211,153,0.7)", marginTop: "4px" }}>💡 {issue.fix_suggestion}</div>}
@@ -517,15 +517,15 @@ Return ONLY valid JSON:
                   <div key={i} style={{ padding: "14px", borderRadius: "10px", background: "rgba(255,77,77,0.03)", border: "1px solid rgba(255,77,77,0.08)", animation: "fadeIn 0.3s ease", animationDelay: `${i * 0.08}s`, animationFillMode: "both" }}>
                     <div style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)", marginBottom: "6px" }}>🚨 {a.action}</div>
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                      <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "mono" }}>Supplier: {a.supplier}</span>
-                      <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "mono" }}>{a.deadline}</span>
-                      {a.potential_fine && <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,77,77,0.08)", color: "#FF4D4D", fontFamily: "mono" }}>Fine risk: {a.potential_fine}</span>}
+                      <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(167,139,250,0.08)", color: "#A78BFA", fontFamily: "'IBM Plex Mono', monospace" }}>Supplier: {a.supplier}</span>
+                      <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "'IBM Plex Mono', monospace" }}>{a.deadline}</span>
+                      {a.potential_fine && <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(255,77,77,0.08)", color: "#FF4D4D", fontFamily: "'IBM Plex Mono', monospace" }}>Fine risk: {a.potential_fine}</span>}
                     </div>
                   </div>
                 ))}
                 {(agentResults.scanner?.regulatory_alerts || []).length > 0 && (
                   <div style={{ marginTop: "8px" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.15)", fontFamily: "mono", marginBottom: "8px" }}>REGULATORY ALERTS</div>
+                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.15)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "8px" }}>REGULATORY ALERTS</div>
                     {agentResults.scanner.regulatory_alerts.map((a, i) => (
                       <div key={i} style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", marginBottom: "6px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                         <div>
@@ -554,8 +554,8 @@ Return ONLY valid JSON:
                   { label: "COST", value: "$0.00", color: "#34D399" },
                 ].map(s => (
                   <div key={s.label} style={{ flex: 1, minWidth: "80px", padding: "10px", borderRadius: "9px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                    <div style={{ fontSize: "14px", fontWeight: 800, color: s.color, fontFamily: "mono" }}>{s.value}</div>
-                    <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.15)", letterSpacing: "0.8px", marginTop: "2px", fontFamily: "mono" }}>{s.label}</div>
+                    <div style={{ fontSize: "14px", fontWeight: 800, color: s.color, fontFamily: "'IBM Plex Mono', monospace" }}>{s.value}</div>
+                    <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.15)", letterSpacing: "0.8px", marginTop: "2px", fontFamily: "'IBM Plex Mono', monospace" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -563,7 +563,7 @@ Return ONLY valid JSON:
           </div>
         )}
 
-        <div style={{ marginTop: "40px", textAlign: "center", fontSize: "10px", color: "rgba(255,255,255,0.08)", fontFamily: "mono" }}>
+        <div style={{ marginTop: "40px", textAlign: "center", fontSize: "10px", color: "rgba(255,255,255,0.08)", fontFamily: "'IBM Plex Mono', monospace" }}>
           ESG Compliance Command Center · 5-Agent Pipeline with Red Teaming · Groq LPU + Llama 3.3 · CSRD Framework
         </div>
       </div>

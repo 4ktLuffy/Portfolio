@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // ─── TYPING HOOK ───────────────────────────────────────────────
 const useTyping = (text, speed = 40, delay = 0) => {
@@ -6,15 +6,19 @@ const useTyping = (text, speed = 40, delay = 0) => {
   const [done, setDone] = useState(false);
   useEffect(() => {
     setDisplayed(""); setDone(false);
+    // `iv` is held out here so the effect's own cleanup can clear it. Returning a
+    // cleanup from inside the setTimeout callback does nothing: setTimeout discards
+    // its callback's return value, so unmounting mid-type used to leave the interval
+    // running and setting state on a component that no longer exists.
+    let iv;
     const t1 = setTimeout(() => {
       let i = 0;
-      const iv = setInterval(() => {
+      iv = setInterval(() => {
         if (i < text.length) { setDisplayed(text.slice(0, i + 1)); i++; }
         else { setDone(true); clearInterval(iv); }
       }, speed);
-      return () => clearInterval(iv);
     }, delay);
-    return () => clearTimeout(t1);
+    return () => { clearTimeout(t1); clearInterval(iv); };
   }, [text, speed, delay]);
   return { displayed, done };
 };
@@ -67,7 +71,7 @@ const MatrixColumn = ({ left, speed, delay: d }) => {
   const [col] = useState(() => Array.from({ length: 12 + Math.floor(Math.random() * 10) }, () => chars[Math.floor(Math.random() * chars.length)]));
   return (
     <div style={{
-      position: "absolute", left, top: "-200px", fontSize: "12px", fontFamily: "mono",
+      position: "absolute", left, top: "-200px", fontSize: "12px", fontFamily: "'IBM Plex Mono', monospace",
       color: "#00FF9D", opacity: 0.06, lineHeight: "16px", whiteSpace: "pre",
       animation: `matrixFall ${speed}s linear ${d}s infinite`, pointerEvents: "none", userSelect: "none",
     }}>
@@ -123,11 +127,11 @@ const ProjectCard = ({ project, index, onSelect }) => {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <span style={{ fontSize: "9px", fontFamily: "mono", color: "#555", fontWeight: 700 }}>
+          <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "#555", fontWeight: 700 }}>
             [{String(index + 1).padStart(2, "0")}]
           </span>
           <span style={{
-            fontSize: "9px", padding: "3px 8px", borderRadius: "4px", fontWeight: 700, fontFamily: "mono",
+            fontSize: "9px", padding: "3px 8px", borderRadius: "4px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace",
             letterSpacing: "0.8px",
             background: project.status === "live" ? "rgba(0,255,157,0.08)" : project.status === "wip" ? "rgba(255,200,0,0.08)" : "rgba(255,255,255,0.03)",
             color: project.status === "live" ? "#00FF9D" : project.status === "wip" ? "#FFC800" : "#444",
@@ -136,14 +140,14 @@ const ProjectCard = ({ project, index, onSelect }) => {
           </span>
           {project.demoRoute && (
             <span style={{
-              fontSize: "9px", padding: "3px 8px", borderRadius: "4px", fontWeight: 700, fontFamily: "mono",
+              fontSize: "9px", padding: "3px 8px", borderRadius: "4px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace",
               letterSpacing: "0.8px", background: `${project.accent}15`, color: project.accent,
             }}>
               ▶ INTERACTIVE DEMO
             </span>
           )}
         </div>
-        <span style={{ fontSize: "11px", fontFamily: "mono", color: "#333" }}>{project.tech}</span>
+        <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.42)" }}>{project.tech}</span>
       </div>
 
       <h3 style={{ fontSize: "18px", fontWeight: 700, margin: "0 0 8px", color: project.status === "locked" ? "#333" : "rgba(255,255,255,0.9)", letterSpacing: "-0.3px" }}>
@@ -157,7 +161,7 @@ const ProjectCard = ({ project, index, onSelect }) => {
       <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginBottom: "16px" }}>
         {project.tags.map((tag, i) => (
           <span key={i} style={{
-            fontSize: "10px", padding: "3px 8px", borderRadius: "4px", fontFamily: "mono",
+            fontSize: "10px", padding: "3px 8px", borderRadius: "4px", fontFamily: "'IBM Plex Mono', monospace",
             background: "rgba(255,255,255,0.03)", color: project.status === "locked" ? "#2a2a2a" : "rgba(255,255,255,0.3)",
             border: "1px solid rgba(255,255,255,0.04)",
           }}>{tag}</span>
@@ -169,8 +173,8 @@ const ProjectCard = ({ project, index, onSelect }) => {
         <div style={{ display: "flex", gap: "16px" }}>
           {project.metrics.map((m, i) => (
             <div key={i}>
-              <div style={{ fontSize: "16px", fontWeight: 800, color: project.accent || "#00FF9D", fontFamily: "mono" }}>{m.value}</div>
-              <div style={{ fontSize: "9px", color: "#444", fontFamily: "mono", letterSpacing: "0.5px", marginTop: "2px" }}>{m.label}</div>
+              <div style={{ fontSize: "16px", fontWeight: 800, color: project.accent || "#00FF9D", fontFamily: "'IBM Plex Mono', monospace" }}>{m.value}</div>
+              <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.50)", fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.5px", marginTop: "2px" }}>{m.label}</div>
             </div>
           ))}
         </div>
@@ -187,13 +191,103 @@ const SkillBar = ({ name, level, color, delay: d }) => {
   if (!visible) return null;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "12px", animation: "fadeIn 0.3s ease" }}>
-      <span style={{ fontSize: "11px", fontFamily: "mono", color: "rgba(255,255,255,0.4)", minWidth: "120px" }}>{name}</span>
+      <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.4)", minWidth: "120px" }}>{name}</span>
       <div style={{ flex: 1, height: "3px", borderRadius: "2px", background: "rgba(255,255,255,0.04)", overflow: "hidden" }}>
         <div style={{ width: filled ? `${level}%` : "0%", height: "100%", borderRadius: "2px", background: color, transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)" }} />
       </div>
-      <span style={{ fontSize: "10px", fontFamily: "mono", color, minWidth: "32px", textAlign: "right" }}>{level}%</span>
+      <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color, minWidth: "32px", textAlign: "right" }}>{level}%</span>
     </div>
   );
+};
+
+// ─── CONTACT ───────────────────────────────────────────────────
+// Single source of truth. Every link on the page reads from here.
+// linkedin is intentionally empty: the link renders only once it is filled in,
+// so the page can never show a dead or invented profile URL.
+const CONTACT = {
+  email: "henosd19@gmail.com",
+  github: "https://github.com/4ktLuffy",
+  linkedin: "",
+};
+
+// ─── OPEN SOURCE ───────────────────────────────────────────────
+// Every entry below was verified against the GitHub API on 2026-08-07.
+// Nothing here is self-reported: each line is a public, clickable artifact
+// that a reader can check in under a minute.
+const OSS = {
+  merged: [
+    {
+      repo: "tracel-ai/burn", num: 5302, diff: "+1189 / -1517",
+      title: "Run the tensor doc examples instead of only compiling them",
+      note: "173 documentation examples were being compiled but never executed, so their assertions could not fail. Converted them to run, and fixed the ones that turned out to be wrong.",
+      url: "https://github.com/tracel-ai/burn/pull/5302",
+    },
+    {
+      repo: "tracel-ai/burn", num: 5294, diff: "+7 / -9",
+      title: "Remove an incorrect checkpointing assertion in grad_replace",
+      note: "An assertion in the autodiff checkpointing path rejected valid states.",
+      url: "https://github.com/tracel-ai/burn/pull/5294",
+    },
+    {
+      repo: "tracel-ai/burn", num: 5301, diff: "+12 / -12",
+      title: "Correct chained reduction doc examples in numeric",
+      url: "https://github.com/tracel-ai/burn/pull/5301",
+    },
+    {
+      repo: "tracel-ai/burn", num: 5298, diff: "+12 / -12",
+      title: "Correct chained doc examples in orderable.rs",
+      url: "https://github.com/tracel-ai/burn/pull/5298",
+    },
+    {
+      repo: "tracel-ai/burn", num: 5300, diff: "+1 / -1",
+      title: "Apply the webgpu feature on the wgpu CI runner",
+      note: "A one-character CI fix: the wgpu runner was not actually enabling the backend it was meant to test.",
+      url: "https://github.com/tracel-ai/burn/pull/5300",
+    },
+    {
+      repo: "huggingface/diffusers", num: 14354, diff: "docs",
+      title: "Add missing Args: entries to scheduler docstrings",
+      url: "https://github.com/huggingface/diffusers/pull/14354",
+    },
+    {
+      repo: "freeCodeCamp/freeCodeCamp", num: 69247, diff: "curriculum",
+      title: "Close an unclosed div and fix wording",
+      url: "https://github.com/freeCodeCamp/freeCodeCamp/pull/69247",
+    },
+  ],
+  open: [
+    {
+      repo: "tracel-ai/burn", num: 5308, kind: "issue",
+      title: "avg_pool1d backward returns uninitialised memory at even channel counts",
+      note: "Found with a sentinel probe: fill a buffer with a recognisable value, free it, run the op, and check whether that value reappears in the output. It did. This detects a buffer that was never written at all, which no numerical comparison can see.",
+      url: "https://github.com/tracel-ai/burn/issues/5308",
+      star: true,
+    },
+    {
+      repo: "tracel-ai/burn", num: 5304, kind: "issue",
+      title: "CPU matmul returns wrong values for certain operand shapes",
+      note: "A silent wrong answer: no crash, no warning, just incorrect numbers. Located by checking the autodiff engine against an independent finite-difference oracle.",
+      url: "https://github.com/tracel-ai/burn/issues/5304",
+    },
+    {
+      repo: "zed-industries/zed", num: 62305, kind: "pull request",
+      title: "Align selections on rendered position rather than byte offsets",
+      note: "Multi-byte characters broke selection alignment because a byte offset was standing in for a rendered column. Shipped with six regression tests, including an ASCII control that must keep passing.",
+      url: "https://github.com/zed-industries/zed/pull/62305",
+    },
+    {
+      repo: "huggingface/candle", num: 3836, kind: "pull request",
+      title: "Fix non-contiguous conv kernels on Metal, and conv1d on CPU",
+      url: "https://github.com/huggingface/candle/pull/3836",
+    },
+  ],
+  crate: {
+    name: "gradcheck", version: "0.1.0",
+    url: "https://crates.io/crates/gradcheck",
+    docs: "https://docs.rs/gradcheck",
+    repo: "https://github.com/4ktLuffy/gradcheck",
+    desc: "Finite-difference gradient checking for Rust ML frameworks. Verifies an autodiff engine against an independent numerical oracle, with a negative control that must fail.",
+  },
 };
 
 // ─── PROJECTS DATA ─────────────────────────────────────────────
@@ -207,29 +301,63 @@ const PROJECTS = [
     status: "live",
     accent: "#FF6B6B",
     metrics: [
-      { value: "100+", label: "BUSINESSES DEPLOYED" },
+      { value: "30+", label: "BUSINESSES DEPLOYED" },
       { value: "Real-time", label: "DETECTION SPEED" },
       { value: "SMS", label: "CHANNEL" },
       { value: "Live", label: "IN PRODUCTION" },
     ],
     problem: "SMS scams cause significant financial damage to businesses and individuals, especially in regions with limited fraud prevention infrastructure",
-    solution: "AI-powered screening system deployed across 100+ businesses that detects and blocks scam messages before they reach end users",
+    solution: "AI-powered screening system deployed across 30+ businesses that detects and blocks scam messages before they reach end users",
+  },
+  {
+    id: "odoo-platform-engineering",
+    title: "Odoo 19 Platform Engineering — Multi-Company Group",
+    description: "I build and maintain the custom Odoo 19 Enterprise layer for a multi-company group running trading and hospitality operations: a drag-and-drop room rack for the hotels, POS integration, departmental requisitions, kitchen and bar stock, and front-desk reporting. Python and PostgreSQL on the server side, OWL components and QWeb on the front. Deployment runs staging-first through Odoo.sh, and no change reaches production until it has been validated on a real restored copy of it.",
+    tags: ["Odoo 19 Enterprise", "Python", "PostgreSQL", "OWL / QWeb", "Multi-Company", "Odoo.sh", "Module Development"],
+    tech: "Odoo 19 + Python + PostgreSQL",
+    status: "live",
+    accent: "#A78BFA",
+    metrics: [
+      { value: "12+", label: "CUSTOM MODULES" },
+      { value: "Multi-Co", label: "ARCHITECTURE" },
+      { value: "19.0", label: "ODOO VERSION" },
+      { value: "Staging→Prod", label: "DEPLOY GATE" },
+    ],
+    problem: "An off-the-shelf ERP does not know how an Ethiopian lodge takes a booking, splits a folio across companies, or moves stock from a bar to a kitchen. Those gaps get filled with spreadsheets and re-keyed data.",
+    solution: "Custom modules built against the real workflow, deployed staging-first so a bad change is caught on a copy of production rather than on production itself.",
+  },
+  {
+    id: "tax-einvoice-compliance",
+    title: "Government E-Invoicing Compliance Integration",
+    description: "Ethiopia is rolling out mandatory electronic invoicing, and I built the Odoo integration for it. Invoices are assembled into the required XML envelope, signed with an X.509 certificate, and registered against the tax authority's API under a strictly sequential document counter shared across every company in the group. The tricky part is not the happy path: it is withholding tax on a post-discount base, recovering a document number after a failed registration so the sequence never breaks, and making sure a failure after a receipt has already been issued can never roll back the fiscalised record.",
+    tags: ["XML Digital Signature", "X.509 Certificates", "Tax Compliance", "API Integration", "Idempotency", "Transaction Safety"],
+    tech: "Odoo 19 + Python + XML-DSig",
+    status: "live",
+    accent: "#F472B6",
+    metrics: [
+      { value: "X.509", label: "DOC SIGNING" },
+      { value: "Sequential", label: "DOC REGISTRY" },
+      { value: "Multi-Co", label: "SHARED COUNTER" },
+      { value: "Savepoint", label: "FAILURE ISOLATION" },
+    ],
+    problem: "A tax authority integration cannot simply retry on failure. A duplicate or skipped document number is a compliance problem, and a crash after a receipt is issued must not undo the record of it.",
+    solution: "Sequential registration with document-number recovery, certificate-based signing, and savepoint isolation so post-fiscal logic can fail without rolling back an already-registered invoice.",
   },
   {
     id: "odoo-implementation",
-    title: "Odoo ERP Implementation",
-    description: "Led end-to-end Odoo ERP implementation for 30+ companies across multiple industries. Configured modules, mapped business workflows, handled data migrations, and trained teams. This work gave me deep insight into how businesses operate — the inefficiencies I saw here directly inspired every AI automation I build today.",
+    title: "Odoo ERP Implementation Consulting",
+    description: "Before the platform work, I ran end-to-end Odoo implementations for 30+ companies across several industries: configuring modules, mapping business workflows, migrating data, and training the teams who had to live with the result. This is where the pattern recognition came from. The inefficiencies I kept meeting here are the reason I build automation now.",
     tags: ["Odoo Certified", "ERP Configuration", "Business Process Mapping", "Data Migration", "Workflow Design", "Training"],
     tech: "Odoo + Python + PostgreSQL",
     status: "live",
-    accent: "#A78BFA",
+    accent: "#8B5CF6",
     metrics: [
       { value: "30+", label: "COMPANIES" },
       { value: "Certified", label: "ODOO STATUS" },
       { value: "E2E", label: "IMPLEMENTATION" },
       { value: "Multi", label: "INDUSTRIES" },
     ],
-    problem: "Companies running on spreadsheets, manual processes, and disconnected tools — no unified system for operations",
+    problem: "Companies running on spreadsheets, manual processes, and disconnected tools with no unified system for operations",
     solution: "Full ERP implementation: configured modules, mapped workflows, migrated data, and trained teams to run on a unified system",
   },
   {
@@ -324,20 +452,21 @@ export default function Portfolio() {
   const handleCommand = (cmd) => {
     const c = cmd.trim().toLowerCase();
     let response = "";
-    if (c === "help") response = "Available: help, projects, skills, journey, about, contact, clear, ls, whoami, pwd, history";
+    if (c === "help") response = "Available: help, projects, oss, skills, journey, about, contact, clear, ls, whoami, pwd, history";
     else if (c === "projects") { setSection("projects"); response = "→ Navigating to projects..."; }
+    else if (c === "oss" || c === "opensource" || c === "open-source") { setSection("opensource"); response = "→ Loading open-source contributions..."; }
     else if (c === "skills") { setSection("skills"); response = "→ Navigating to skills..."; }
     else if (c === "journey" || c === "about") { setSection("journey"); response = "→ Loading origin story..."; }
     else if (c === "home") { setSection("home"); response = "→ Navigating home..."; }
-    else if (c === "contact") response = "→ henosdereje@email.com · Open to AI automation roles";
+    else if (c === "contact") response = `→ ${CONTACT.email} · ${CONTACT.github} · Open to remote engineering roles`;
     else if (c === "clear") { setCommandHistory([]); return; }
     else if (c === "sudo" || c.startsWith("sudo")) response = "Nice try. 😏";
     else if (c === "ls") response = "projects/  skills/  journey/  about.md  contact.md  odoo-gaps.log  README.md";
     else if (c === "whoami") response = "Henos Dereje — Software Engineer → Odoo Consultant → AI Automation Engineer";
     else if (c === "pwd") response = "/home/henos/portfolio";
-    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built AI SMS scam prevention (100+ businesses) → AI Automation Engineer";
-    else if (c === "cat readme.md") response = "I implemented Odoo for 30+ companies and saw the same gaps everywhere:\nmanual data entry, slow ticket routing, wasted hours on reports.\nI also built an AI SMS scam prevention system deployed to 100+ businesses.\nNow I build AI pipelines to automate the work nobody should be doing by hand.";
-    else if (c === "cat odoo-gaps.log") response = "[GAP] Manual invoice entry — 20 min/invoice\n[GAP] Support tickets unrouted for hours\n[GAP] Meeting notes never became action items\n[GAP] SMS scams costing businesses real money\n[FIX] Built AI pipelines + scam detection for all of these.\n[DEPLOYED] 100+ businesses running the SMS system live.";
+    else if (c === "history") response = "Full-stack dev (Python/Go/Java) → Odoo ERP for 30+ companies → Built AI SMS scam prevention (30+ businesses) → AI Automation Engineer";
+    else if (c === "cat readme.md") response = "I implemented Odoo for 30+ companies and saw the same gaps everywhere:\nmanual data entry, slow ticket routing, wasted hours on reports.\nI also built an AI SMS scam prevention system deployed to 30+ businesses.\nNow I build AI pipelines to automate the work nobody should be doing by hand.";
+    else if (c === "cat odoo-gaps.log") response = "[GAP] Manual invoice entry — 20 min/invoice\n[GAP] Support tickets unrouted for hours\n[GAP] Meeting notes never became action items\n[GAP] SMS scams costing businesses real money\n[FIX] Built AI pipelines + scam detection for all of these.\n[DEPLOYED] 30+ businesses running the SMS system live.";
     else if (c === "stack") response = "Languages: Python, Go, Java, JavaScript\nAI: LLM Pipelines, Multi-Agent, RAG, Prompt Eng\nERP: Odoo (certified), business process mapping\nInfra: Groq, Llama 3.3, Vercel, Docker, PostgreSQL";
     else response = `command not found: ${cmd}. Type 'help' for available commands.`;
     setCommandHistory(prev => [...prev, { cmd, response }]);
@@ -347,13 +476,15 @@ export default function Portfolio() {
     { id: "home", label: "~/home" },
     { id: "journey", label: "~/journey" },
     { id: "projects", label: "~/projects" },
+    { id: "opensource", label: "~/open-source" },
     { id: "skills", label: "~/skills" },
   ];
 
   return (
     <div style={{ minHeight: "100vh", background: "#0A0A0C", color: "#fff", fontFamily: "'IBM Plex Mono', 'Courier New', monospace", position: "relative" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+        /* Fonts are linked from index.html <head> so they are not render-blocked
+           behind this component mounting. */
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes scanDown{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
@@ -364,6 +495,10 @@ export default function Portfolio() {
         *{box-sizing:border-box;scrollbar-width:thin;scrollbar-color:rgba(0,255,157,.15) transparent}
         *::-webkit-scrollbar{width:4px}*::-webkit-scrollbar-thumb{background:rgba(0,255,157,.15);border-radius:2px}
         ::selection{background:rgba(0,255,157,.2)}
+        /* The nav scrolls sideways on narrow screens rather than clipping its last item.
+           The scrollbar itself is hidden: the row is short and a visible bar looks broken. */
+        .nav-scroll{scrollbar-width:none;-ms-overflow-style:none}
+        .nav-scroll::-webkit-scrollbar{display:none}
         input:focus,textarea:focus{outline:none}
       `}</style>
 
@@ -379,19 +514,22 @@ export default function Portfolio() {
         borderBottom: "1px solid rgba(255,255,255,0.04)",
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <span style={{ color: "#00FF9D", fontWeight: 700, fontSize: "14px", letterSpacing: "-0.5px" }}>
+        {/* minWidth:0 lets this flex child shrink below its content width, which is what
+            allows the nav list inside it to scroll instead of overflowing the page. */}
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", minWidth: 0, flex: 1 }}>
+          <span style={{ color: "#00FF9D", fontWeight: 700, fontSize: "14px", letterSpacing: "-0.5px", flexShrink: 0 }}>
             <GlitchText>HD</GlitchText>
           </span>
-          <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.08)" }} />
-          <div style={{ display: "flex", gap: "4px" }}>
+          <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
+          <div className="nav-scroll" style={{ display: "flex", gap: "4px", overflowX: "auto", minWidth: 0 }}>
             {navItems.map(item => (
               <button key={item.id} onClick={() => setSection(item.id)} style={{
                 padding: "5px 12px", borderRadius: "6px", border: "none",
                 background: section === item.id ? "rgba(0,255,157,0.08)" : "transparent",
-                color: section === item.id ? "#00FF9D" : "#444",
+                color: section === item.id ? "#00FF9D" : "rgba(255,255,255,0.5)",
                 fontSize: "12px", fontWeight: 500, cursor: "pointer", transition: "all 0.2s",
                 fontFamily: "'IBM Plex Mono', monospace",
+                flexShrink: 0, whiteSpace: "nowrap",
               }}>{item.label}</button>
             ))}
           </div>
@@ -400,8 +538,9 @@ export default function Portfolio() {
           padding: "5px 12px", borderRadius: "6px",
           border: `1px solid ${showTerminal ? "rgba(0,255,157,0.2)" : "rgba(255,255,255,0.06)"}`,
           background: showTerminal ? "rgba(0,255,157,0.06)" : "transparent",
-          color: showTerminal ? "#00FF9D" : "#444",
-          fontSize: "11px", cursor: "pointer", fontFamily: "mono",
+          color: showTerminal ? "#00FF9D" : "rgba(255,255,255,0.5)",
+          fontSize: "11px", cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace",
+          flexShrink: 0, whiteSpace: "nowrap", marginLeft: "12px",
         }}>
           {showTerminal ? "× close" : ">_ terminal"}
         </button>
@@ -445,14 +584,14 @@ export default function Portfolio() {
           <div style={{ paddingTop: "80px" }}>
             {/* Boot sequence */}
             <div style={{ marginBottom: "48px", opacity: loaded ? 1 : 0, transition: "opacity 0.5s" }}>
-              <TermLine delay={0} color="#333">system boot v4.2.1 — loading henos_dereje.portfolio...</TermLine>
-              <TermLine delay={200} color="#333">modules: [erp_experience, ai_pipeline, agent_framework, business_logic] ✓</TermLine>
+              <TermLine delay={0} color="rgba(255,255,255,0.42)">system boot v4.2.1 — loading henos_dereje.portfolio...</TermLine>
+              <TermLine delay={200} color="rgba(255,255,255,0.42)">modules: [erp_experience, ai_pipeline, agent_framework, business_logic] ✓</TermLine>
               <TermLine delay={400} color="#00FF9D">connection established. welcome.</TermLine>
             </div>
 
             {/* Hero */}
             <div style={{ marginBottom: "60px" }}>
-              <div style={{ fontSize: "11px", color: "#333", marginBottom: "16px", letterSpacing: "2px" }}>
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.42)", marginBottom: "16px", letterSpacing: "2px" }}>
                 // HENOS DEREJE
               </div>
               <h1 style={{
@@ -468,29 +607,36 @@ export default function Portfolio() {
               <div style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", marginTop: "20px", minHeight: "24px", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 400 }}>
                 {heroType.displayed}{!heroType.done && <Cursor />}
               </div>
-              <div style={{ fontSize: "13px", color: "#333", marginTop: "8px", minHeight: "20px" }}>
-                {subType.displayed}{heroType.done && !subType.done && <Cursor color="#333" />}
+              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.42)", marginTop: "8px", minHeight: "20px" }}>
+                {subType.displayed}{heroType.done && !subType.done && <Cursor color="rgba(255,255,255,0.42)" />}
               </div>
 
               <div style={{ marginTop: "32px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <button onClick={() => setSection("projects")} style={{
                   padding: "10px 20px", borderRadius: "8px", border: "1px solid rgba(0,255,157,0.3)",
                   background: "rgba(0,255,157,0.06)", color: "#00FF9D", fontSize: "13px", fontWeight: 600,
-                  cursor: "pointer", fontFamily: "mono", transition: "all 0.2s",
+                  cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace", transition: "all 0.2s",
                 }}>
                   view projects →
                 </button>
-                <button onClick={() => setSection("journey")} style={{
+                <button onClick={() => setSection("opensource")} style={{
                   padding: "10px 20px", borderRadius: "8px", border: "1px solid rgba(167,139,250,0.3)",
                   background: "rgba(167,139,250,0.06)", color: "#A78BFA", fontSize: "13px", fontWeight: 600,
-                  cursor: "pointer", fontFamily: "mono", transition: "all 0.2s",
+                  cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace", transition: "all 0.2s",
+                }}>
+                  open source ({OSS.merged.length} merged) →
+                </button>
+                <button onClick={() => setSection("journey")} style={{
+                  padding: "10px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.08)",
+                  background: "transparent", color: "rgba(255,255,255,0.45)", fontSize: "13px", fontWeight: 500,
+                  cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace", transition: "all 0.2s",
                 }}>
                   my journey →
                 </button>
                 <button onClick={() => setShowTerminal(true)} style={{
                   padding: "10px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)",
-                  background: "transparent", color: "#444", fontSize: "13px", fontWeight: 500,
-                  cursor: "pointer", fontFamily: "mono", transition: "all 0.2s",
+                  background: "transparent", color: "rgba(255,255,255,0.50)", fontSize: "13px", fontWeight: 500,
+                  cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace", transition: "all 0.2s",
                 }}>
                   open terminal
                 </button>
@@ -499,7 +645,7 @@ export default function Portfolio() {
 
             {/* What I do */}
             <div style={{ marginBottom: "60px" }}>
-              <div style={{ fontSize: "10px", color: "#333", letterSpacing: "2px", marginBottom: "20px" }}>// WHAT I BUILD</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.42)", letterSpacing: "2px", marginBottom: "20px" }}>// WHAT I BUILD</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "12px" }}>
                 {[
                   { icon: "⚡", title: "Multi-Agent Pipelines", desc: "Specialized AI agents that collaborate in sequence — the same workflows I watched people do manually in Odoo, now automated" },
@@ -521,8 +667,8 @@ export default function Portfolio() {
 
             {/* Origin story block */}
             <div style={{ marginBottom: "60px", padding: "24px", borderRadius: "14px", background: "rgba(0,255,157,0.015)", border: "1px solid rgba(0,255,157,0.06)", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: "12px", right: "16px", fontSize: "9px", fontFamily: "mono", color: "#222", letterSpacing: "1px" }}>// ORIGIN</div>
-              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "mono" }}>WHY AI AUTOMATION?</div>
+              <div style={{ position: "absolute", top: "12px", right: "16px", fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.30)", letterSpacing: "1px" }}>// ORIGIN</div>
+              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>WHY AI AUTOMATION?</div>
               <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.8, fontFamily: "'Space Grotesk', sans-serif", maxWidth: "700px" }}>
                 I spent years implementing <span style={{ color: "#A78BFA" }}>Odoo ERP</span> for companies — configuring modules, mapping workflows, migrating data. I learned how businesses actually operate: what grows them, what destroys them, and where time gets wasted at scale.
               </div>
@@ -534,21 +680,21 @@ export default function Portfolio() {
             {/* Featured stats */}
             <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", marginBottom: "60px", padding: "24px", borderRadius: "12px", background: "rgba(0,255,157,0.02)", border: "1px solid rgba(0,255,157,0.06)" }}>
               {[
-                { value: "6", label: "SHIPPED PROJECTS", color: "#00FF9D" },
-                { value: "100+", label: "BUSINESSES SERVED", color: "#60A5FA" },
+                { value: String(OSS.merged.length), label: "MERGED OSS PRs", color: "#00FF9D" },
+                { value: String(PROJECTS.length), label: "SHIPPED PROJECTS", color: "#60A5FA" },
                 { value: "Odoo", label: "ERP CERTIFIED", color: "#A78BFA" },
-                { value: "4+", label: "LANGUAGES", color: "#FBBF24" },
+                { value: "30+", label: "BUSINESSES SERVED", color: "#FBBF24" },
               ].map((s, i) => (
                 <div key={i} style={{ flex: 1, minWidth: "120px", textAlign: "center" }}>
                   <div style={{ fontSize: "24px", fontWeight: 800, color: s.color, fontFamily: "'Space Grotesk', sans-serif" }}>{s.value}</div>
-                  <div style={{ fontSize: "9px", color: "#444", letterSpacing: "1.2px", marginTop: "4px" }}>{s.label}</div>
+                  <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.2px", marginTop: "4px" }}>{s.label}</div>
                 </div>
               ))}
             </div>
 
             {/* Approach */}
             <div style={{ marginBottom: "40px" }}>
-              <div style={{ fontSize: "10px", color: "#333", letterSpacing: "2px", marginBottom: "20px" }}>// MY APPROACH</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.42)", letterSpacing: "2px", marginBottom: "20px" }}>// MY APPROACH</div>
               <div style={{ borderLeft: "2px solid rgba(0,255,157,0.15)", paddingLeft: "20px" }}>
                 {[
                   { num: "01", text: "Map the real business workflow — my ERP background means I understand how operations actually run, not just how they look in a demo" },
@@ -570,7 +716,7 @@ export default function Portfolio() {
         {section === "projects" && (
           <div style={{ paddingTop: "48px" }}>
             <div style={{ marginBottom: "32px" }}>
-              <div style={{ fontSize: "10px", color: "#333", letterSpacing: "2px", marginBottom: "12px" }}>// PROJECTS</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.42)", letterSpacing: "2px", marginBottom: "12px" }}>// PROJECTS</div>
               <h2 style={{ fontSize: "28px", fontWeight: 800, margin: 0, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.5px" }}>
                 Real problems. <span style={{ color: "#00FF9D" }}>Real solutions.</span>
               </h2>
@@ -598,30 +744,30 @@ export default function Portfolio() {
                 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
                     <div>
-                      <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(0,255,157,0.08)", color: "#00FF9D", fontWeight: 700, fontFamily: "mono" }}>
+                      <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(0,255,157,0.08)", color: "#00FF9D", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
                         {selectedProject.status === "live" ? "● LIVE" : "◐ IN PROGRESS"}
                       </span>
                     </div>
-                    <button onClick={() => setSelectedProject(null)} style={{ background: "none", border: "none", color: "#444", cursor: "pointer", fontSize: "18px" }}>×</button>
+                    <button onClick={() => setSelectedProject(null)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.50)", cursor: "pointer", fontSize: "18px" }}>×</button>
                   </div>
 
                   <h3 style={{ fontSize: "22px", fontWeight: 800, margin: "0 0 8px", fontFamily: "'Space Grotesk', sans-serif", color: "#fff" }}>{selectedProject.title}</h3>
                   <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: 1.6, margin: "0 0 20px" }}>{selectedProject.description}</p>
 
                   <div style={{ padding: "14px", borderRadius: "10px", background: "rgba(255,77,77,0.04)", border: "1px solid rgba(255,77,77,0.08)", marginBottom: "12px" }}>
-                    <div style={{ fontSize: "9px", color: "#FF4D4D", fontWeight: 700, letterSpacing: "1px", fontFamily: "mono", marginBottom: "4px" }}>PROBLEM</div>
+                    <div style={{ fontSize: "9px", color: "#FF4D4D", fontWeight: 700, letterSpacing: "1px", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "4px" }}>PROBLEM</div>
                     <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{selectedProject.problem}</div>
                   </div>
                   <div style={{ padding: "14px", borderRadius: "10px", background: "rgba(0,255,157,0.04)", border: "1px solid rgba(0,255,157,0.08)", marginBottom: "20px" }}>
-                    <div style={{ fontSize: "9px", color: "#00FF9D", fontWeight: 700, letterSpacing: "1px", fontFamily: "mono", marginBottom: "4px" }}>SOLUTION</div>
+                    <div style={{ fontSize: "9px", color: "#00FF9D", fontWeight: 700, letterSpacing: "1px", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "4px" }}>SOLUTION</div>
                     <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{selectedProject.solution}</div>
                   </div>
 
                   <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                     {selectedProject.metrics?.map((m, i) => (
                       <div key={i} style={{ textAlign: "center", flex: 1, minWidth: "70px", padding: "10px", borderRadius: "8px", background: "rgba(255,255,255,0.02)" }}>
-                        <div style={{ fontSize: "18px", fontWeight: 800, color: selectedProject.accent, fontFamily: "mono" }}>{m.value}</div>
-                        <div style={{ fontSize: "8px", color: "#444", letterSpacing: "0.8px", marginTop: "3px" }}>{m.label}</div>
+                        <div style={{ fontSize: "18px", fontWeight: 800, color: selectedProject.accent, fontFamily: "'IBM Plex Mono', monospace" }}>{m.value}</div>
+                        <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.50)", letterSpacing: "0.8px", marginTop: "3px" }}>{m.label}</div>
                       </div>
                     ))}
                   </div>
@@ -651,11 +797,159 @@ export default function Portfolio() {
           </div>
         )}
 
+        {/* ─── OPEN SOURCE ─── */}
+        {section === "opensource" && (
+          <div style={{ paddingTop: "48px" }}>
+            <div style={{ marginBottom: "28px" }}>
+              <div style={{ fontSize: "10px", color: "#555", letterSpacing: "2px", marginBottom: "12px" }}>// OPEN SOURCE</div>
+              <h2 style={{ fontSize: "28px", fontWeight: 800, margin: 0, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.5px" }}>
+                Code that <span style={{ color: "#00FF9D" }}>other people merged</span>
+              </h2>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", marginTop: "10px", lineHeight: 1.7, fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+                Everything on this page is a public link you can open. {OSS.merged.length} pull requests merged by
+                maintainers who had no reason to be generous, in Rust and Python projects I do not own. Reviewed
+                by strangers, on their standards, in their codebase.
+              </p>
+            </div>
+
+            {/* The crate */}
+            <div style={{ marginBottom: "28px", padding: "22px", borderRadius: "14px", background: "rgba(0,255,157,0.03)", border: "1px solid rgba(0,255,157,0.12)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "10px", marginBottom: "10px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(0,255,157,0.1)", color: "#00FF9D", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.8px" }}>
+                    ● PUBLISHED CRATE
+                  </span>
+                  <span style={{ fontSize: "17px", fontWeight: 800, color: "#fff", fontFamily: "'IBM Plex Mono', monospace" }}>
+                    {OSS.crate.name}
+                  </span>
+                  <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                    v{OSS.crate.version}
+                  </span>
+                </div>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <a href={OSS.crate.url} target="_blank" rel="noopener noreferrer" style={{
+                    fontSize: "11px", padding: "5px 12px", borderRadius: "6px", textDecoration: "none",
+                    background: "rgba(0,255,157,0.08)", color: "#00FF9D", border: "1px solid rgba(0,255,157,0.2)",
+                    fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600,
+                  }}>crates.io ↗</a>
+                  <a href={OSS.crate.docs} target="_blank" rel="noopener noreferrer" style={{
+                    fontSize: "11px", padding: "5px 12px", borderRadius: "6px", textDecoration: "none",
+                    background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.08)",
+                    fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600,
+                  }}>docs.rs ↗</a>
+                  <a href={OSS.crate.repo} target="_blank" rel="noopener noreferrer" style={{
+                    fontSize: "11px", padding: "5px 12px", borderRadius: "6px", textDecoration: "none",
+                    background: "rgba(255,255,255,0.03)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.08)",
+                    fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600,
+                  }}>source ↗</a>
+                </div>
+              </div>
+              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, margin: 0, fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+                {OSS.crate.desc}
+              </p>
+              <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", lineHeight: 1.7, margin: "10px 0 0", fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+                I wrote this to answer a question a test suite cannot: is the gradient actually right, or does it
+                merely match another implementation that is wrong in the same way? It carries a negative control,
+                a deliberately broken case that <em>must</em> fail. If the control ever passes, the tool is lying
+                and every other result it reports is worthless.
+              </p>
+            </div>
+
+            {/* Merged */}
+            <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
+              MERGED · {OSS.merged.length}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "32px" }}>
+              {OSS.merged.map((pr) => (
+                <a key={`${pr.repo}#${pr.num}`} href={pr.url} target="_blank" rel="noopener noreferrer" style={{
+                  display: "block", textDecoration: "none",
+                  padding: "16px 18px", borderRadius: "10px",
+                  background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.05)",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
+                    <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(139,92,246,0.12)", color: "#A78BFA", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.5px" }}>
+                      ✓ MERGED
+                    </span>
+                    <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                      {pr.repo}<span style={{ color: "#00FF9D" }}>#{pr.num}</span>
+                    </span>
+                    <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.3)", fontFamily: "'IBM Plex Mono', monospace", marginLeft: "auto" }}>
+                      {pr.diff}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "14px", fontWeight: 600, color: "rgba(255,255,255,0.88)", fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.4 }}>
+                    {pr.title}
+                  </div>
+                  {pr.note && (
+                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.42)", lineHeight: 1.65, marginTop: "6px", fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+                      {pr.note}
+                    </div>
+                  )}
+                </a>
+              ))}
+            </div>
+
+            {/* Open */}
+            <div style={{ fontSize: "10px", color: "#FBBF24", letterSpacing: "2px", marginBottom: "6px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
+              UNDER REVIEW · {OSS.open.length}
+            </div>
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", margin: "0 0 14px", lineHeight: 1.6, fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+              Open work, listed honestly as open. Two of these are bugs that produce wrong answers without
+              crashing, which is the kind I go looking for.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {OSS.open.map((it) => (
+                <a key={`${it.repo}#${it.num}`} href={it.url} target="_blank" rel="noopener noreferrer" style={{
+                  display: "block", textDecoration: "none",
+                  padding: "16px 18px", borderRadius: "10px",
+                  background: it.star ? "rgba(251,191,36,0.03)" : "rgba(255,255,255,0.015)",
+                  border: `1px solid ${it.star ? "rgba(251,191,36,0.15)" : "rgba(255,255,255,0.05)"}`,
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
+                    <span style={{ fontSize: "9px", padding: "2px 7px", borderRadius: "4px", background: "rgba(251,191,36,0.1)", color: "#FBBF24", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.5px" }}>
+                      ◐ OPEN {it.kind.toUpperCase()}
+                    </span>
+                    <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", fontFamily: "'IBM Plex Mono', monospace" }}>
+                      {it.repo}<span style={{ color: "#FBBF24" }}>#{it.num}</span>
+                    </span>
+                  </div>
+                  <div style={{ fontSize: "14px", fontWeight: 600, color: "rgba(255,255,255,0.88)", fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.4 }}>
+                    {it.title}
+                  </div>
+                  {it.note && (
+                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.42)", lineHeight: 1.65, marginTop: "6px", fontFamily: "'Space Grotesk', sans-serif", maxWidth: "660px" }}>
+                      {it.note}
+                    </div>
+                  )}
+                </a>
+              ))}
+            </div>
+
+            {/* How */}
+            <div style={{ marginTop: "32px", padding: "22px", borderRadius: "14px", background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "14px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
+                // HOW I FIND THESE
+              </div>
+              {[
+                { n: "01", t: "Build an oracle, not a comparison. Two implementations that agree can be wrong together. A finite-difference check derives the answer from the definition instead, so it has no shared assumption to be wrong with." },
+                { n: "02", t: "Make the checker prove it can fail. Every run includes a case that must be rejected. A suite with no negative control cannot tell success from silence." },
+                { n: "03", t: "Ask what the numbers cannot answer. Comparing values never reveals a buffer that was never written. Filling memory with a sentinel and looking for it in the output does." },
+                { n: "04", t: "Verify before filing, then verify again. Reproduce three times, kill your own best hypothesis first, and check the claim against the published release rather than your local branch." },
+              ].map((s) => (
+                <div key={s.n} style={{ display: "flex", gap: "14px", marginBottom: "12px", alignItems: "flex-start" }}>
+                  <span style={{ fontSize: "11px", color: "#00FF9D", fontWeight: 700, marginTop: "2px", fontFamily: "'IBM Plex Mono', monospace" }}>{s.n}</span>
+                  <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: 1.7, fontFamily: "'Space Grotesk', sans-serif" }}>{s.t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ─── JOURNEY ─── */}
         {section === "journey" && (
           <div style={{ paddingTop: "48px" }}>
             <div style={{ marginBottom: "36px" }}>
-              <div style={{ fontSize: "10px", color: "#333", letterSpacing: "2px", marginBottom: "12px" }}>// JOURNEY</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.42)", letterSpacing: "2px", marginBottom: "12px" }}>// JOURNEY</div>
               <h2 style={{ fontSize: "28px", fontWeight: 800, margin: 0, fontFamily: "'Space Grotesk', sans-serif" }}>
                 From ERP to <span style={{ color: "#00FF9D" }}>AI Engineering</span>
               </h2>
@@ -729,8 +1023,8 @@ export default function Portfolio() {
                     border: `1px solid ${item.isGap ? "rgba(255,77,77,0.1)" : item.isCurrent ? "rgba(0,255,157,0.1)" : "rgba(255,255,255,0.04)"}`,
                   }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "6px" }}>
-                      <span style={{ fontSize: "9px", fontFamily: "mono", color: item.color, fontWeight: 700, letterSpacing: "1.2px" }}>{item.phase}</span>
-                      <span style={{ fontSize: "10px", fontFamily: "mono", color: "#333" }}>{item.period}</span>
+                      <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: item.color, fontWeight: 700, letterSpacing: "1.2px" }}>{item.phase}</span>
+                      <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.42)" }}>{item.period}</span>
                     </div>
                     <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "0 0 10px", color: "rgba(255,255,255,0.85)", fontFamily: "'Space Grotesk', sans-serif" }}>
                       {item.title}
@@ -745,7 +1039,7 @@ export default function Portfolio() {
                         <span key={j} style={{
                           fontSize: "10px", padding: "3px 8px", borderRadius: "4px",
                           background: item.color + "10", color: item.color + "AA",
-                          fontFamily: "mono", fontWeight: 500,
+                          fontFamily: "'IBM Plex Mono', monospace", fontWeight: 500,
                         }}>{tag}</span>
                       ))}
                     </div>
@@ -756,7 +1050,7 @@ export default function Portfolio() {
 
             {/* What makes me different */}
             <div style={{ marginTop: "32px", padding: "24px", borderRadius: "14px", background: "rgba(0,255,157,0.02)", border: "1px solid rgba(0,255,157,0.06)" }}>
-              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "16px", fontWeight: 700, fontFamily: "mono" }}>// WHAT MAKES ME DIFFERENT</div>
+              <div style={{ fontSize: "10px", color: "#00FF9D", letterSpacing: "2px", marginBottom: "16px", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>// WHAT MAKES ME DIFFERENT</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
                 {[
                   { icon: "🏢", title: "I've been inside the businesses", desc: "Not just building tools from outside — I've mapped real workflows, migrated real data, and seen where real time gets wasted." },
@@ -779,15 +1073,15 @@ export default function Portfolio() {
         {section === "skills" && (
           <div style={{ paddingTop: "48px" }}>
             <div style={{ marginBottom: "32px" }}>
-              <div style={{ fontSize: "10px", color: "#333", letterSpacing: "2px", marginBottom: "12px" }}>// SKILLS</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.42)", letterSpacing: "2px", marginBottom: "12px" }}>// SKILLS</div>
               <h2 style={{ fontSize: "28px", fontWeight: 800, margin: 0, fontFamily: "'Space Grotesk', sans-serif" }}>
                 Tech <span style={{ color: "#00FF9D" }}>stack</span>
               </h2>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
               <div>
-                <div style={{ fontSize: "10px", color: "#444", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>AI & AUTOMATION</div>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>AI & AUTOMATION</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   <SkillBar name="LLM Pipelines" level={92} color="#00FF9D" delay={100} />
                   <SkillBar name="Prompt Engineering" level={90} color="#00FF9D" delay={200} />
@@ -797,7 +1091,7 @@ export default function Portfolio() {
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "10px", color: "#444", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>LANGUAGES</div>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>LANGUAGES</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   <SkillBar name="Python" level={90} color="#60A5FA" delay={150} />
                   <SkillBar name="Go" level={80} color="#60A5FA" delay={250} />
@@ -808,9 +1102,9 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginTop: "24px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px", marginTop: "24px" }}>
               <div>
-                <div style={{ fontSize: "10px", color: "#444", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>BUSINESS & ERP</div>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>BUSINESS & ERP</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   <SkillBar name="Odoo ERP" level={92} color="#A78BFA" delay={200} />
                   <SkillBar name="Process Mapping" level={88} color="#A78BFA" delay={300} />
@@ -819,7 +1113,7 @@ export default function Portfolio() {
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "10px", color: "#444", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>ENGINEERING</div>
+                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>ENGINEERING</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   <SkillBar name="API Integration" level={90} color="#FBBF24" delay={250} />
                   <SkillBar name="System Design" level={80} color="#FBBF24" delay={350} />
@@ -830,7 +1124,7 @@ export default function Portfolio() {
             </div>
 
             <div style={{ marginTop: "32px" }}>
-              <div style={{ fontSize: "10px", color: "#444", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>TOOLS & PLATFORMS</div>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.50)", letterSpacing: "1.5px", marginBottom: "14px", fontWeight: 700 }}>TOOLS & PLATFORMS</div>
               <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                 {["Groq", "Llama 3.3", "OpenAI", "LangChain", "Odoo", "Vercel", "Git", "Docker", "PostgreSQL", "Redis", "REST APIs", "n8n", "Linux", "VS Code"].map((tool, i) => (
                   <span key={i} style={{
@@ -863,13 +1157,21 @@ export default function Portfolio() {
 
         {/* Footer */}
         <div style={{ marginTop: "80px", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
-          <span style={{ fontSize: "11px", color: "#222" }}>© 2026 Henos Dereje</span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)" }}>© 2026 Henos Dereje</span>
           <div style={{ display: "flex", gap: "16px" }}>
-            {["GitHub", "LinkedIn", "Email"].map(link => (
-              <span key={link} style={{ fontSize: "11px", color: "#333", cursor: "pointer", transition: "color 0.2s" }}
-                onMouseEnter={e => e.target.style.color = "#00FF9D"}
-                onMouseLeave={e => e.target.style.color = "#333"}
-              >{link}</span>
+            {[
+              { label: "GitHub", href: CONTACT.github },
+              { label: "LinkedIn", href: CONTACT.linkedin },
+              { label: "Email", href: `mailto:${CONTACT.email}` },
+            ].filter(l => l.href && !l.href.endsWith("mailto:")).map(l => (
+              <a
+                key={l.label}
+                href={l.href}
+                {...(l.href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#00FF9D"}
+                onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.45)"}
+              >{l.label}</a>
             ))}
           </div>
         </div>

@@ -149,7 +149,7 @@ const FieldRow = ({ label, value, confidence, type = "text" }) => {
       <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", fontFamily: "'IBM Plex Mono', monospace", minWidth: "130px", flexShrink: 0 }}>{label}</span>
       <span style={{ fontSize: "12px", color: type === "amount" ? "#34D399" : type === "date" ? "#60A5FA" : "rgba(255,255,255,0.75)", fontWeight: type === "amount" ? 600 : 400, fontFamily: "'IBM Plex Mono', monospace", textAlign: "right", flex: 1, wordBreak: "break-word" }}>{value || "—"}</span>
       {confidence !== undefined && (
-        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: confColor + "12", color: confColor, fontWeight: 700, fontFamily: "mono", flexShrink: 0 }}>{confidence}%</span>
+        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: confColor + "12", color: confColor, fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", flexShrink: 0 }}>{confidence}%</span>
       )}
     </div>
   );
@@ -368,7 +368,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
               <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "linear-gradient(135deg, #60A5FA, #34D399)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>🧾</div>
               <h1 style={{ fontSize: "20px", fontWeight: 800, margin: 0, letterSpacing: "-0.3px" }}>Invoice Extractor AI</h1>
-              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontWeight: 700, fontFamily: "mono", letterSpacing: "0.8px" }}>v1.0</span>
+              <span style={{ fontSize: "9px", padding: "3px 8px", borderRadius: "4px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: "0.8px" }}>v1.0</span>
             </div>
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", margin: 0 }}>Extract structured data from any invoice format — outputs accounting-ready CSV & JSON</p>
           </div>
@@ -376,14 +376,14 @@ Extract numbers exactly as written including currency symbols. If a field is not
             {keySaved ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "6px 12px", borderRadius: "8px", background: "rgba(52,211,153,0.06)", border: "1px solid rgba(52,211,153,0.12)" }}>
                 <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34D399" }} />
-                <span style={{ fontSize: "11px", fontFamily: "mono", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
+                <span style={{ fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.4)" }}>{apiKey.slice(0, 7)}...{apiKey.slice(-3)}</span>
                 <button onClick={() => { setKeySaved(false); setApiKey(""); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", cursor: "pointer", fontSize: "12px" }}>×</button>
               </div>
             ) : (
               <div style={{ display: "flex", gap: "5px" }}>
-                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "mono", width: "180px" }} />
+                <input type={keyVisible ? "text" : "password"} value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="Groq API key..." style={{ padding: "6px 10px", borderRadius: "7px", background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.05)", color: "#fff", fontSize: "11px", fontFamily: "'IBM Plex Mono', monospace", width: "180px" }} />
                 <button onClick={() => setKeyVisible(!keyVisible)} style={{ padding: "6px", borderRadius: "7px", border: "1px solid rgba(255,255,255,.05)", background: "rgba(255,255,255,.02)", color: "rgba(255,255,255,.3)", cursor: "pointer" }}>{keyVisible ? "🙈" : "👁️"}</button>
-                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#60A5FA" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#fff" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "mono" }}>CONNECT</button>
+                <button onClick={() => apiKey.trim() && setKeySaved(true)} style={{ padding: "6px 12px", borderRadius: "7px", border: "none", background: apiKey.trim() ? "#60A5FA" : "rgba(255,255,255,.04)", color: apiKey.trim() ? "#fff" : "rgba(255,255,255,.15)", fontWeight: 700, fontSize: "11px", cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>CONNECT</button>
               </div>
             )}
           </div>
@@ -410,7 +410,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "12px", padding: "16px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px", flexWrap: "wrap", gap: "6px" }}>
-                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "mono" }}>INVOICE INPUT</span>
+                  <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "1.2px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace" }}>INVOICE INPUT</span>
                   <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
                     {Object.entries(SAMPLE_INVOICES).map(([key, s]) => (
                       <button key={key} onClick={() => setInput(s.text)} style={{
@@ -431,7 +431,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
                 <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
                   <button onClick={() => input.trim() && extractInvoice(input.trim())} disabled={processing || !input.trim() || !keySaved} style={{
                     flex: 1, padding: "12px", borderRadius: "9px", border: "none", fontWeight: 700, fontSize: "12px",
-                    fontFamily: "mono", cursor: (processing || !input.trim() || !keySaved) ? "not-allowed" : "pointer",
+                    fontFamily: "'IBM Plex Mono', monospace", cursor: (processing || !input.trim() || !keySaved) ? "not-allowed" : "pointer",
                     background: processing ? "rgba(96,165,250,0.08)" : (!input.trim() || !keySaved) ? "rgba(255,255,255,.03)" : "linear-gradient(135deg, #60A5FA, #34D399)",
                     color: (!input.trim() || !keySaved) ? "rgba(255,255,255,.12)" : processing ? "#60A5FA" : "#fff",
                     transition: "all 0.3s",
@@ -446,7 +446,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
                 <div style={{ background: "#090A0D", border: "1px solid rgba(255,255,255,0.03)", borderRadius: "10px", overflow: "hidden" }}>
                   <div style={{ padding: "7px 12px", display: "flex", alignItems: "center", gap: "6px", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                     <div style={{ display: "flex", gap: "4px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FF5F57" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#FFBD2E" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#28CA41" }} /></div>
-                    <span style={{ fontSize: "9px", fontFamily: "mono", color: "rgba(255,255,255,0.2)" }}>extraction-console</span>
+                    <span style={{ fontSize: "9px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.2)" }}>extraction-console</span>
                   </div>
                   <div style={{ maxHeight: "120px", overflowY: "auto", padding: "8px 12px", fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.8 }}>
                     {logs.map((l, i) => (
@@ -461,7 +461,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
               )}
 
               {error && (
-                <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "mono" }}>⚠ {error}</div>
+                <div style={{ padding: "10px 14px", borderRadius: "9px", background: "rgba(248,113,113,.06)", border: "1px solid rgba(248,113,113,.12)", fontSize: "11px", color: "#F87171", fontFamily: "'IBM Plex Mono', monospace" }}>⚠ {error}</div>
               )}
             </div>
 
@@ -472,8 +472,8 @@ Extract numbers exactly as written including currency symbols. If a field is not
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <StatusBadge status={status} />
                   <div style={{ display: "flex", gap: "5px" }}>
-                    <button onClick={handleExportCSV} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(52,211,153,0.15)", background: "rgba(52,211,153,0.04)", color: "#34D399", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>📄 CSV</button>
-                    <button onClick={handleExportJSON} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "mono" }}>{ } JSON</button>
+                    <button onClick={handleExportCSV} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(52,211,153,0.15)", background: "rgba(52,211,153,0.04)", color: "#34D399", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>📄 CSV</button>
+                    <button onClick={handleExportJSON} style={{ padding: "5px 10px", borderRadius: "6px", border: "1px solid rgba(96,165,250,0.15)", background: "rgba(96,165,250,0.04)", color: "#60A5FA", fontSize: "10px", fontWeight: 700, cursor: "pointer", fontFamily: "'IBM Plex Mono', monospace" }}>{ } JSON</button>
                   </div>
                 </div>
 
@@ -484,8 +484,8 @@ Extract numbers exactly as written including currency symbols. If a field is not
                       const c = val >= 90 ? "#34D399" : val >= 70 ? "#FBBF24" : "#F87171";
                       return (
                         <div key={key} style={{ flex: 1, minWidth: "80px", padding: "8px", borderRadius: "8px", background: "rgba(0,0,0,0.15)", textAlign: "center" }}>
-                          <div style={{ fontSize: "16px", fontWeight: 800, color: c, fontFamily: "mono" }}>{val}%</div>
-                          <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.5px", marginTop: "2px", textTransform: "uppercase", fontFamily: "mono" }}>{key.replace("_", " ")}</div>
+                          <div style={{ fontSize: "16px", fontWeight: 800, color: c, fontFamily: "'IBM Plex Mono', monospace" }}>{val}%</div>
+                          <div style={{ fontSize: "8px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.5px", marginTop: "2px", textTransform: "uppercase", fontFamily: "'IBM Plex Mono', monospace" }}>{key.replace("_", " ")}</div>
                         </div>
                       );
                     })}
@@ -494,7 +494,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
 
                 {/* Header fields */}
                 <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "11px", padding: "14px" }}>
-                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "8px" }}>INVOICE DETAILS</div>
+                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "8px" }}>INVOICE DETAILS</div>
                   <FieldRow label="Invoice #" value={extracted.invoice_number} />
                   <FieldRow label="Date" value={extracted.invoice_date} type="date" />
                   <FieldRow label="Due Date" value={extracted.due_date} type="date" />
@@ -505,22 +505,22 @@ Extract numbers exactly as written including currency symbols. If a field is not
                 {/* Parties */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                   <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "11px", padding: "14px" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "8px" }}>VENDOR</div>
+                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "8px" }}>VENDOR</div>
                     <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>{extracted.vendor?.name || "—"}</div>
                     <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", lineHeight: 1.5, whiteSpace: "pre-wrap" }}>{extracted.vendor?.address || ""}</div>
-                    {extracted.vendor?.vat_id && <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "mono", marginTop: "4px" }}>VAT: {extracted.vendor.vat_id}</div>}
+                    {extracted.vendor?.vat_id && <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace", marginTop: "4px" }}>VAT: {extracted.vendor.vat_id}</div>}
                   </div>
                   <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "11px", padding: "14px" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "8px" }}>CUSTOMER</div>
+                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "8px" }}>CUSTOMER</div>
                     <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>{extracted.customer?.name || "—"}</div>
                     <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", lineHeight: 1.5, whiteSpace: "pre-wrap" }}>{extracted.customer?.address || ""}</div>
-                    {extracted.customer?.vat_id && <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "mono", marginTop: "4px" }}>VAT: {extracted.customer.vat_id}</div>}
+                    {extracted.customer?.vat_id && <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", fontFamily: "'IBM Plex Mono', monospace", marginTop: "4px" }}>VAT: {extracted.customer.vat_id}</div>}
                   </div>
                 </div>
 
                 {/* Line items */}
                 <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "11px", padding: "14px" }}>
-                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "10px" }}>
+                  <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "10px" }}>
                     LINE ITEMS — {extracted.line_items?.length || 0} items
                   </div>
                   <LineItemTable items={extracted.line_items} />
@@ -529,7 +529,7 @@ Extract numbers exactly as written including currency symbols. If a field is not
                     <FieldRow label={`Tax (${extracted.tax_rate || "—"})`} value={extracted.tax_amount} type="amount" />
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0 0", borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "4px" }}>
                       <span style={{ fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.6)" }}>TOTAL</span>
-                      <span style={{ fontSize: "16px", fontWeight: 800, color: "#34D399", fontFamily: "mono" }}>{extracted.total || "—"}</span>
+                      <span style={{ fontSize: "16px", fontWeight: 800, color: "#34D399", fontFamily: "'IBM Plex Mono', monospace" }}>{extracted.total || "—"}</span>
                     </div>
                   </div>
                 </div>
@@ -542,17 +542,17 @@ Extract numbers exactly as written including currency symbols. If a field is not
                     borderRadius: "11px", padding: "14px",
                   }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                      <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", fontFamily: "mono", color: validation.is_valid ? "#34D399" : "#FBBF24" }}>
+                      <span style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", fontFamily: "'IBM Plex Mono', monospace", color: validation.is_valid ? "#34D399" : "#FBBF24" }}>
                         {validation.is_valid ? "✓ VALIDATION PASSED" : "⚠ VALIDATION WARNINGS"}
                       </span>
-                      <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.3)" }}>
+                      <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.3)" }}>
                         {validation.completeness?.completeness_score || "?"}% complete
                       </span>
                     </div>
                     {validation.math_check && (
                       <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "8px" }}>
                         {Object.entries(validation.math_check).map(([k, v]) => (
-                          <span key={k} style={{ fontSize: "9px", padding: "3px 7px", borderRadius: "4px", background: v ? "rgba(52,211,153,0.08)" : "rgba(248,113,113,0.08)", color: v ? "#34D399" : "#F87171", fontFamily: "mono", fontWeight: 600 }}>
+                          <span key={k} style={{ fontSize: "9px", padding: "3px 7px", borderRadius: "4px", background: v ? "rgba(52,211,153,0.08)" : "rgba(248,113,113,0.08)", color: v ? "#34D399" : "#F87171", fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600 }}>
                             {v ? "✓" : "✕"} {k.replace(/_/g, " ")}
                           </span>
                         ))}
@@ -570,8 +570,8 @@ Extract numbers exactly as written including currency symbols. If a field is not
                 {/* Bank details */}
                 {extracted.bank_details && (
                   <div style={{ background: "rgba(255,255,255,0.015)", border: "1px solid rgba(255,255,255,0.04)", borderRadius: "11px", padding: "14px" }}>
-                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "mono", marginBottom: "6px" }}>PAYMENT DETAILS</div>
-                    <div style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.5)", fontFamily: "mono", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{extracted.bank_details}</div>
+                    <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "1px", color: "rgba(255,255,255,0.2)", fontFamily: "'IBM Plex Mono', monospace", marginBottom: "6px" }}>PAYMENT DETAILS</div>
+                    <div style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.5)", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{extracted.bank_details}</div>
                   </div>
                 )}
               </div>
@@ -598,12 +598,12 @@ Extract numbers exactly as written including currency symbols. If a field is not
                     <div>
                       <div style={{ fontSize: "12.5px", fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>{h.vendor}</div>
                       <div style={{ display: "flex", gap: "6px", marginTop: "5px" }}>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "mono" }}>{h.invoiceNum}</span>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontFamily: "mono" }}>{h.total}</span>
-                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: h.isValid ? "rgba(52,211,153,0.08)" : "rgba(251,191,36,0.08)", color: h.isValid ? "#34D399" : "#FBBF24", fontFamily: "mono" }}>{h.isValid ? "✓ valid" : "⚠ issues"}</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(96,165,250,0.08)", color: "#60A5FA", fontFamily: "'IBM Plex Mono', monospace" }}>{h.invoiceNum}</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: "rgba(52,211,153,0.08)", color: "#34D399", fontFamily: "'IBM Plex Mono', monospace" }}>{h.total}</span>
+                        <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "3px", background: h.isValid ? "rgba(52,211,153,0.08)" : "rgba(251,191,36,0.08)", color: h.isValid ? "#34D399" : "#FBBF24", fontFamily: "'IBM Plex Mono', monospace" }}>{h.isValid ? "✓ valid" : "⚠ issues"}</span>
                       </div>
                     </div>
-                    <span style={{ fontSize: "10px", fontFamily: "mono", color: "rgba(255,255,255,0.15)" }}>{h.timestamp}</span>
+                    <span style={{ fontSize: "10px", fontFamily: "'IBM Plex Mono', monospace", color: "rgba(255,255,255,0.15)" }}>{h.timestamp}</span>
                   </div>
                 ))}
               </div>
